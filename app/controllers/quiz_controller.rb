@@ -19,6 +19,7 @@ class QuizController < ApplicationController
 
   def evaluate
     @questions = session[:questions]
+    @max_points = @questions.map{|x| x.points}.inject{|x,y| x+y}
     @tem = session[:tem]
     @title = @tem.name + " - Unicorn College"
     @replies = {}
@@ -37,6 +38,7 @@ class QuizController < ApplicationController
         reaction = @replies[idx][answer.choice]
         points = (!!reaction == !!answer.correct )
         if not points
+          # tohle vynuluje body pokud jsou spatne vic nez 2 odpovedi
           total = 0 if total < question.points
           total -= 2
           total = 0 if not question.is_multiple
@@ -47,5 +49,6 @@ class QuizController < ApplicationController
       @score += total
       @corrections[idx]["total"]=total
     end
+    @percentage = 100*@score/@max_points
   end
 end
