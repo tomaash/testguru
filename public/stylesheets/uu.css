@@ -25,6 +25,15 @@ body {font-family: Arial;background-color: #F3F3F3;  font-size: 80%;}
 /*  display:block;*/
 /*  margin-top: 20px;margin-bottom:3px;*/
   }
+
+.points { 
+  font-weight: bold;
+  font-size: 15px;
+  border: 1px solid silver;
+  padding: 8px;
+}
+  
+  
 .button { cursor: pointer; }
 
 h1,h2,h3,h4,h5,h6 {color: #535353;
