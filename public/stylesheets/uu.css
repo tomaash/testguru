@@ -21,7 +21,10 @@ body {font-family: Arial;background-color: #F3F3F3;  font-size: 80%;}
 
 #main { padding: 10px;}
 #logo { padding: 0px; margin: 0px; border:0px}
-.question { font-weight: bold;display:block;margin-top: 20px;margin-bottom:3px;}
+.question { font-weight: bold;
+/*  display:block;*/
+/*  margin-top: 20px;margin-bottom:3px;*/
+  }
 .button { cursor: pointer; }
 
 h1,h2,h3,h4,h5,h6 {color: #535353;

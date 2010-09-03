@@ -3,8 +3,14 @@
 <% form_for :quiz, :url => {:action => 'evaluate'}, :html => {:name=>'myform'} do |f| %>
 <% @questions.each_with_index do |question,i| %>
 <% cnt = i+1 %>
-<span class="question"> <%= cnt %>. <%= (h question.value).html_newlines %> </span>
-
+<table width="100%"><tr>
+  <td valign="top">
+    <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> </span> 
+  </td>
+  <td valign="top" align="right" width="30px">
+    <i>(<%= question.points%>b)</i>
+  </td>
+</tr></table>
 <% question.answers.each do |answer| %>
 
 <% if question.is_multiple %>
@@ -14,7 +20,7 @@
 <% end %>
 <label for="answers_<%=cnt%>_<%=answer.choice%>"><%= h answer.value %></label><br/>
 <% end %>
-
+<br/>
 <% end %>
 <br/>
 <center><img class="button" src="/images/uu_send.png" onclick="document.myform.submit();" /></center>

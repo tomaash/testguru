@@ -2,23 +2,27 @@
 <span style="font-size:20px"> Váš výsledek: <span class="red"><%= @score %>b</span>, max <%= @max_points %>b  (<%=@percentage%>%)</span>
 <p><a href="javascript: history.go(-1)">Opakovat test</a></p>
 <% @questions.each_with_index do |question,i| %>
-  <% cnt = i+1 %>
-  <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> (<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)</span> 
-  <table>
+<% cnt = i+1 %>
+<table width="100%"><tr>
+  <td valign="top">
+    <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> </span> 
+  </td>
+  <td valign="top" align="right" width="80px">
+    (<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)
+  </td>
+</tr></table>
   <% question.answers.each do |answer| %>
-  <tr>
-    <%    
-    reaction = @replies[cnt.to_s][answer.choice] 
-    points = @corrections[cnt.to_s][answer.choice]
-    %>
-    <td><%= reaction ? "&#10003;" : "&nbsp;" %></td>
-    <td><%= answer.correct ? "&#9679;" : "&nbsp;" %></td>
-    <!-- <td class="<%= points ? 'green' : 'red' %>"> -->
-    <td><%= h answer.value %></td>
-  </tr>
+  <%    
+  reaction = @replies[cnt.to_s][answer.choice] 
+  %>
+  <% if question.is_multiple %>
+  <%= check_box_tag "answers[#{cnt}][#{answer.choice}]",value = "1", reaction, :disabled => true %> 
+  <% else %>
+  <%= radio_button_tag "answers[#{cnt}]",answer.choice, reaction, :disabled => true %>
   <% end %>
-  <!-- <tr><td></td><td></td><td><b> Hodnocení: <%= @corrections[cnt.to_s]["total"] %></b></td></tr> -->
-</table>
-<% end %>
-<br/>
-
+  <span class="<%= answer.correct ? 'green' : 'none' %>">
+    <%= h answer.value %><br/>
+  </span>
+  <% end %>
+  <br/>
+  <% end %>
