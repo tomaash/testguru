@@ -13,7 +13,8 @@
     %>
     <td><%= reaction ? "&#10003;" : "&nbsp;" %></td>
     <td><%= answer.correct ? "&#9679;" : "&nbsp;" %></td>
-    <td class="<%= points ? 'green' : 'red' %>"> <%= h answer.value %></td>
+    <!-- <td class="<%= points ? 'green' : 'red' %>"> -->
+    <td><%= h answer.value %></td>
   </tr>
   <% end %>
   <tr><td></td><td></td><td><b> Hodnocení: <%= @corrections[cnt.to_s]["total"] %></b></td></tr>

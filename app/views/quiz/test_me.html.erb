@@ -4,8 +4,15 @@
 <% @questions.each_with_index do |question,i| %>
 <% cnt = i+1 %>
 <span class="question"> <%= cnt %>. <%= (h question.value).html_newlines %> </span>
+
 <% question.answers.each do |answer| %>
-<%= check_box_tag "answers[#{cnt}][#{answer.choice}]" %> <%= h answer.value %> <br/>
+
+<% if question.is_multiple %>
+<%= check_box_tag "answers[#{cnt}][#{answer.choice}]" %> 
+<% else %>
+<%= radio_button_tag "answers[#{cnt}]",answer.choice %>
+<% end %>
+<label for="answers_<%=cnt%>_<%=answer.choice%>"><%= h answer.value %></label><br/>
 <% end %>
 
 <% end %>
