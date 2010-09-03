@@ -10,7 +10,7 @@
   <td valign="top" align="right" width="30px">
     <i>(<%= question.points%>b)</i>
   </td>
-</tr></table>
+</tr><tr><td>
 <% question.answers.each do |answer| %>
 
 <% if question.is_multiple %>
@@ -21,7 +21,9 @@
 <label for="answers_<%=cnt%>_<%=answer.choice%>"><%= h answer.value %></label><br/>
 <% end %>
 <br/>
+</td></tr></table>
 <% end %>
+
 <br/>
 <center><img class="button" src="/images/uu_send.png" onclick="document.myform.submit();" /></center>
 <% end %>

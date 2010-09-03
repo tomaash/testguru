@@ -10,9 +10,9 @@
       <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> </span> 
     </td>
     <td valign="top" align="right" width="80px">
-      (<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)
+      <i>(<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)</i>
     </td>
-  </tr></table>
+  </tr><tr><td>
   <% question.answers.each do |answer| %>
   <%    
   reaction = @replies[cnt.to_s][answer.choice] 
@@ -26,6 +26,7 @@
     <%= h answer.value %><br/>
   </span>
   <% end %>
+</td></tr></table>
   <br/>
   <% end %>
 
