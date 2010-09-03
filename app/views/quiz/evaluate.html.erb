@@ -1,0 +1,23 @@
+<h1> Vyhodnocení testu <%= @tem.name %> </h1>
+<span style="font-size:20px"> Váš výsledek: <%= @score %> bodů </span>
+<p><a href="javascript: history.go(-1)">Opakovat test</a></p>
+<% @questions.each_with_index do |question,i| %>
+  <% cnt = i+1 %>
+  <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> (<%= question.points%>b)</span> 
+  <table>
+  <% question.answers.each do |answer| %>
+  <tr>
+    <%    
+    reaction = @replies[cnt.to_s][answer.choice] 
+    points = @corrections[cnt.to_s][answer.choice]
+    %>
+    <td><%= reaction ? "&#10003;" : "&nbsp;" %></td>
+    <td><%= answer.correct ? "&#9679;" : "&nbsp;" %></td>
+    <td class="<%= points ? 'green' : 'red' %>"> <%= h answer.value %></td>
+  </tr>
+  <% end %>
+  <tr><td></td><td></td><td><b> Hodnocení: <%= @corrections[cnt.to_s]["total"] %></b></td></tr>
+</table>
+<% end %>
+<br/>
+

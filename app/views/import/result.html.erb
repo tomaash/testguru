@@ -1,0 +1,22 @@
+<h1>Import Result</h1>
+<h2> Imported questions </h2>
+<%= "none" if @imported_questions.empty? %>
+<% @imported_questions.each do |question| %>
+  <p>
+  <%= question.value %><br/>
+  <% question.answers.each do |answer| %>
+    - <%= answer.value %> <br/>
+  <% end %>
+</p>
+<% end %>
+
+<h2> Replaced questions </h2>
+<%= "none" if @replaced_questions.empty? %>
+<% @replaced_questions.each do |question| %>
+  <p>
+  <%= question.value %><br/>
+  <% question.answers.each do |answer| %>
+    - <%= answer.value %> <br/>
+  <% end %>
+  </p>
+<% end %>

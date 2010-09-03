@@ -1,0 +1,630 @@
+---
+# Otázka 1
+- 1. (3) Pojmy třída a objekt jsou v následujícím vztahu:
+- - Vůbec spolu nesouvisí, pojem třída se používá pouze ve strukturovaném programování, pojem objekt pouze v objektově orientovaném.
+  - Oba pojmy znamenají totéž a lze je volně zaměňovat.
+  - * Objekty jsou instancemi jednotlivých tříd, které slouží jako jejich šablony.
+  - Všechny objekty jsou třídou, ale ne všechny třídy jsou objektem.
+
+# Otázka 2
+- |
+  2. (3) Jak dopadne spuštění následujícího kódu?
+
+  puts "14" + 28
+- - Proběhne v pořádku, výsledkem bude vypsání řetězce "1428".
+  - Proběhne v pořádku, výsledkem bude vypsání čísla 42.
+  - Proběhne v pořádku, výsledkem bude vypsání čísla 1428.
+  - Proběhne v pořádku, výsledkem bude vypsání řetězce "42".
+  - * Skončí s chybou, nelze sčítat řetězec a číslo.
+  - Skončí s chybou, předáváme metodě puts chybný počet parametrů.
+
+# Otázka 3
+- 3. (4) Jaké jsou důvody strukturování kódu do jednotlivých metod?
+- - * Výsledný kód je kratší a přehlednější.
+  - * V kódu je snazší provádět změny existující funkcionality.
+  - Díky rozdělení na metody poběží program rychleji.
+  - * V kódu je snazší opravovat chyby.
+
+# Otázka 4
+- 4. (4) O dědičnosti v Ruby platí:
+- - * Týká se tříd a znamená, že potomek přebírá veškeré chování předka (které pak může modifikovat).
+  - Týká se objektů a znamená, že potomek přebírá veškeré chování předka (které pak může modifikovat).
+  - Týká se tříd a znamená, že předek přebírá veškeré chování potomka (které pak může modifikovat).
+  - Týká se objektů a znamená, že předek přebírá veškeré chování potomka (které pak může modifikovat).
+
+# Otázka 5
+- |
+  5. (3) O následující části kódu platí:
+
+  class Dice
+    def roll
+      return 1 + rand(6)
+    end
+  end
+  my_dice = Dice.new
+- - Nebude fungovat, třída Dice nemá konstruktor.
+  - Po jejím spuštění bude proměnná my_dice obsahovat celé číslo v rozmezí mezi 1 a 6.
+  - Po jejím spuštění bude na obrazovku vypsáno celé číslo v rozmezí mezi 1 a 6.
+  - * Po jejím spuštění bude proměnná my_dice obsahovat instanci třídy Dice.
+
+# Otázka 6
+- |
+  6. (5) Následující kód nebude správně fungovat. Které řádky zapsané dovnitř definice třídy jej spraví?
+
+  class User
+    def initialize(login, password)
+      @login = login
+      @password = password
+    end
+  end
+  user = User.new("alice", "rabbit_hole")
+  puts user.login
+- - |
+    public @login
+  - | *
+    attr_reader :login
+  - | *
+    def login
+      return @login
+    end
+  - |
+    define_getter :login
+
+# Otázka 7
+- 7. (3) Konstruktor se v Ruby jmenuje:
+- - Stejně jako třída samotná (tedy např. konstruktor třídy "Dice" se jmenuje "Dice").
+  - Stejně jako třída samotná, pouze první písmeno je malé (tedy např. konstruktor třídy "Dice" se jmenuje "dice").
+  - * Pro libovolnou třídu vždy "initialize".
+  - Pro libovolnou třídu vždy "constructor".
+
+# Otázka 8
+- |
+  8. (4) Jaký bude výstup následujícího programu?
+
+  class Muggle
+    def initialize(name)
+      @name = name
+    end
+    def print_info
+      puts "#{@name} is just an ordinary Muggle."
+    end
+  end
+  class Wizard < Muggle
+    def print_info
+      puts "#{@name} is a wizard!"
+    end
+  end
+  harry = Wizard.new("Harry Potter")
+  dudley = Muggle.new("Dudley Dursley")
+  dudley.print_info
+  harry.print_info
+- - Program skončí s chybou, snažíme se předefinovat již jednou definovanou metodu print_info.
+  - |
+    Dudley Dursley is just an ordinary Muggle.
+    Harry Potter is just an ordinary Muggle.
+  - |
+    Dudley Dursley is a wizard!
+    Harry Potter is a wizard!
+  - | *
+    Dudley Dursley is just an ordinary Muggle.
+    Harry Potter is a wizard!
+
+# Otázka 9
+- |
+  9. (4) Jaký bude výstup následujícího programu?
+
+  class Muggle
+    def initialize(name)
+      @name = name
+    end
+  end
+  class Wizard < Muggle
+    def open_door
+      puts "#{@name} swishes their wang and cries 'Alohomora!'."
+    end
+  end
+  harry = Wizard.new("Harry Potter")
+  dudley = Muggle.new("Dudley Dursley")
+  harry.open_door
+  dudley.open_door
+- - |
+    Harry Potter swishes their wang and cries 'Alohomora!'.
+    Dudley Dursley swishes their wang and cries 'Alohomora!'.
+  - |
+    Harry Potter swishes their wang and cries 'Alohomora!'. Dudley Dursley swishes their wang and cries 'Alohomora!'.
+  - Program skončí chybou, aniž by cokoliv vypsal.
+  - * Program skončí chybou, ale nejprve vypíše řádek "Harry Potter swishes their wang and cries 'Alohomora!'."
+
+# Otázka 10
+- |
+  10. (4) Jaký bude výstup následujícího programu?
+
+  superhero = "Rogue"
+  superhero.length.times do |x|
+    print x * (x - 1)
+    print " " if x < superhero.length - 1
+  end
+- - 0 2 6 12 20
+  - 0 0 0 0 0
+  - * 0 0 2 6 12
+  - R o g u e
+
+# Otázka 11
+- |
+  11. (5) Jaký bude výstup následujícího programu?
+
+  superhero = "Storm"
+  superhero.length.times do |x|
+    print x+1 * x
+    print " " if x < superhero.length - 1
+  end
+- - 0 2 6 12 20
+  - S t o r m
+  - 1 2 5 10 17
+  - * 0 2 4 6 8
+
+# Otázka 12
+- |
+  12. (5) Jaký bude výstup následujícího programu?
+
+  superhero = "Jubilee"
+  superhero.length.times do |x|
+    print x * x+1
+    print " " if x < superhero.length - 1
+  end
+- - 0 2 6 12 20 30 42
+  - * 1 2 5 10 17 26 37
+  - J u b i l e e
+  - 1 2 3 4 5 6 7
+
+# Otázka 13
+- |
+  13. (5) Doplňte chybějící tři řádky tak, aby výstup následujícího programu:
+
+  brotherhood = ["Magneto", "Quicksilver", "Scarlet Witch", "Toad"]
+  # radek c. 1
+  # radek c. 2
+  # radek c. 3
+  brotherhood.delete(x)
+  brotherhood.delete_at(y)
+  brotherhood << z
+  p brotherhood
+
+  vypadal takto:
+
+  ["Magneto", "Toad", "Mystique"]
+- - ***
+
+# Otázka 14
+- |
+  14. (5) Jaký bude výstup následujícího programu?
+
+  x = [[]] + [[0, 0, 0]] + []
+  x << [{}]
+  x << [[0, 0]]
+  x.each do |y|
+    print y.length
+    print " "
+  end
+- - 1 3 0 1 2 
+  - 0 0 0 0 
+  - * 0 3 1 1 
+  - 1 3 1 2 
+  - 0 3 0 1 2 
+
+# Otázka 15
+- |
+  15. (5) Doplňte chybějící dva řádky tak, aby výstup následujícího programu:
+
+  dictionary = {
+    "bank" => ["banka", "breh"],
+    "break" => ["zlomit", "rozbit"],
+    "rout" => ["cesta", "smer", "smerovat"]
+  }
+  dictionary.each do |k, v|
+    # radek c. 1
+    # radek c. 2
+    end
+  end
+
+  vypadal takto (pomiňme, že pořadí v iterování přes asociativní pole není garantováno):
+
+  banka,
+  breh,
+  zlomit,
+  rozbit,
+  cesta,
+  smer,
+  smerovat,
+- - ***
+
+# Otázka 16
+- |
+  16. (4) Doplňte implementaci metody arithmetic_mean tak, aby pro své dva parametry, čísla, vrátila jejich aritmetický průměr.
+
+  def arithmetic_mean(x, y)
+
+  end
+- - ***
+
+# Otázka 17
+- |
+  17. (5) Doplňte implementaci metody arithmetic_mean tak, aby pro svůj jediný parametr, pole čísel, vrátila jejich aritmetický průměr.
+
+  def arithmetic_mean(arr)
+
+
+
+
+
+  end
+- - ***
+
+# Otázka 18
+- |
+  18. (4) Jaký bude výstup následujícího programu?
+
+  a = "A"
+  b = "B"
+  def c(a)
+    a = "B"
+    b = "A"
+    return "C"
+  end
+  print a + " "
+  print b + " "
+  c(a)
+  print a + " "
+  print b + " "
+  print c(b)
+- - ***
+
+# Otázka 19
+- |
+  19. (4) Doplňte implementaci metody abs tak, aby pro svůj jediný parametr, číslo, vrátila jeho absolutní hodnotu (pochopitelně bez použití volání x.abs()).
+
+  def abs(x)
+
+
+
+  end
+- - ***
+
+# Otázka 20
+- |
+  20. (5) Doplňte implementaci metody diskutuj_trojuhelnik tak, aby pro své tři parametry, číslo vyjadřující délky stran trojúhelníku, vypsala v závislosti na hodnotách těchto parametrů do konzole jednu z následujících tří možností: "trojuhelnik je rovnostranny", "trojuhelnik je rovnoramenny", "trojuhelnik neni ani rovnostranny, ani rovnoramenny".
+
+  def diskutuj_trojuhelnik(x, y, z)
+
+
+
+
+
+
+
+  end
+- - ***
+
+# Otázka 21
+- |
+  21. (3) Vyberte chybějící řádek tak, aby následující program vypsal dané pole od konce:
+
+  dwarfs = ["Doc", "Grumpy", "Happy", "Sleepy", "Bashful", "Sneezy", "Dopey"]
+  dwarfs.length.times do |i|
+    # radek k doplneni
+  end
+- - puts dwarfs[i]
+  - puts dwarfs[dwarfs.length - i]
+  - * puts dwarfs[dwarfs.length - i - 1]
+  - puts dwarfs[i + 1]
+  - puts dwarfs[dwarfs.length - i + 1]
+
+# Otázka 22
+- |
+  22. (3) Doplňte dva chybějící řádky tak, aby následující program správně fungoval:
+
+  class Person
+    attr_reader :name, :surname
+    def initialize(n, s)
+      # radek c. 1
+      # radek c. 2
+    end
+  end
+  my_person = Person.new("James", "Bond")
+  puts "The name's #{my_person.surname}, #{my_person.name} #{my_person.surname}."
+- - ***
+
+# Otázka 23
+- 23. (3) Dokumentační komentáře (tedy ty, ze kterých se generuje dokumentace) v Ruby:
+- - * Syntakticky se nijak neliší od obyčejných komentářů.
+  - Začínají dvěma znaky křížku (\#\#) místo jednoho (\#).
+  - Zapisují se na stejný řádek jako definice třídy (metody), kterou dokumentují.
+  - * Zapisují se před definici třídy (metody), kterou dokumentují.
+  - Zapisují se za definici třídy (metody), kterou dokumentují.
+  - Umožňují omezený způsob formátování, a to výhradně prostřednictvím jazyka HTML.
+  - Umožňují bohaté formátování převzaté z DTP systému TeX.
+
+# Otázka 24
+- 24. (3) Jak si připravíme objekty, které chceme mít k dispozici ve všech unit testech naší testovací třídy?
+- - Vytvoříme je v konstruktoru testovací třídy.
+  - Vytvoříme je ve speciální metodě init.
+  - Vytvoříme je v jedné z metod init, run nebo setup.
+  - * Vytvoříme je ve speciální metodě setup.
+
+# Otázka 25
+- 25. (4) Která volání ověří v rámci unit testu, že proměnná person obsahuje hodnotu nil?
+- - assert(person)
+  - test(person)
+  - * assert_nil(person)
+  - test_not_nil(not person)
+  - assert_equal(person.nil?)
+  - * assert(person.nil?)
+
+# Otázka 26
+- 26. (3) Jakým způsobem bychom měli provést úklid dat společných pro všechny unit testy naší testovací třídy?
+- - V rámci speciální metody finalize.
+  - V rámci speciální metody throwup.
+  - * V rámci speciální metody teardown.
+  - V rámci abecedně poslední testovací metody.
+  - Společná data musíme uklízet v rámci každé testovací metody samostatně.
+
+# Otázka 27
+- 27. (3) Jaké jsou výhody pasivního ošetřování chyb proti aktivnímu?
+- - Díky pasivnímu ošetření chyb program poběží rychleji.
+  - Díky pasivnímu ošetření chyb program bude zabírat méně operační paměti.
+  - * Pasivní ošetřování chyb nám umožňuje psát přehlednější kód.
+  - * Díky pasivní ošetřování chyb můžeme snadněji společným kódem ošetřit různorodé chybové stavy při dodržení pravidly DRY (don't repeat yourself).
+
+# Otázka 28
+- |
+  28. (5) Jaký bude výstup následujícího programu?
+
+  i = 0
+  begin
+    i = i + 1
+    raise Exception.new if i == 1
+    i = i + 2
+  rescue Exception
+    i = i * 2
+    retry
+    i = i - 1
+  ensure
+    i = i * i
+  end
+  puts i
+- - Žádný, program se zacyklí
+  - 5
+  - 9
+  - 16
+  - * 25
+
+# Otázka 29
+- |
+  29. (5) Jaký bude výstup následujícího programu?
+
+  i = 2
+  begin
+    i = i - 1
+    raise Exception.new
+    i = i + 2
+  rescue Exception
+    i = i * 3
+    retry if i == 3
+    i = i + 1
+  ensure
+    i = i * i
+  end
+  puts i
+- - Žádný, program se zacyklí
+  - * 49
+  - 7
+  - 25
+  - 36
+
+# Otázka 30
+- |
+  30. (5) Jaký bude výstup následujícího programu?
+
+  i = 2
+  j = 3
+  begin
+    i = i * j + 1
+    j = i - 3
+    raise Exception.new if j == 4
+    j = j + i
+  rescue Exception
+    j = j - 1
+    i = i / j
+    retry
+    j = j + i
+  ensure
+    i = i * j
+    j = j + i
+  end
+  puts i
+- - * Žádný, program se zacyklí
+  - 18
+  - 3
+  - 10
+  - 54
+
+# Otázka 31
+- 31. (4) Pro které z následujících řetězců vrátí operátor =~ aplikovaný na regulární výraz /[A-Z0-9]{3}[0-9]{2}[WS]\.(CZ|EN)\/(FULL|PART)TIME$/ hodnotu různou od nil?
+- - * SDP09W.CZ/FULLTIME
+  - ma109w.cz/fulltime
+  - * ECO09W.CZ/PARTTIME
+  - * UCL-BT:ALG10S.CZ/FULLTIME
+  - * 12345W.EN/PARTTIME
+
+# Otázka 32
+- 32. (5) Pro které z následujících řetězců vrátí operátor =~ aplikovaný na regulární výraz /^[+\-]?[0-9]*(.[0-9]+)?(e[+\-]?[0-9]+)?$/ hodnotu různou od nil?
+- - * "0"
+  - * "-1.5"
+  - "-0.032e"
+  - * "+3e-14"
+  - * "0x1e34"
+  - "+2."
+  - * "-.3e1"
+
+# Otázka 33
+- |
+  33. (5) Jaký bude výstup následujícího programu?
+
+  superhero = "Rogue"
+  superhero.length.times do |x|
+    print x-1 * x
+    print " " if x < superhero.length - 1
+  end
+- - 0 0 2 6 12
+  - * 0 0 0 0 0
+  - R o g u e
+  - 0 2 6 12 20
+
+# Otázka 34
+- |
+  34. (5) Jaký bude výstup následujícího programu?
+
+  superhero = "Storm"
+  superhero.length.times do |x|
+    print x * x+1
+    print " " if x < superhero.length - 1
+  end
+- - * 1 2 5 10 17
+  - S t o r m
+  - 0 2 4 6 8
+  - 0 2 6 12 20
+
+# Otázka 35
+- |
+  35. (5) Jaký bude výstup následujícího programu?
+
+  superhero = "Jubilee"
+  superhero.length.times do |x|
+    print x * 1+x
+    print " " if x < superhero.length - 1
+  end
+- - 0 2 6 12 20 30 42
+  - J u b i l e e
+  - 1 2 3 4 5 6 7
+  - * 0 2 4 6 8 10 12
+
+# Otázka 36
+- |
+  36. (5) Jaký bude výstup následujícího programu?
+
+  superhero = "Cyclops"
+  superhero.length.times do |x|
+    print 2 * x+1
+    print " " if x < superhero.length - 1
+  end
+- - 0 2 6 12 20 30 42
+  - C y c l o p s
+  - 1 2 3 4 5 6 7
+  - * 1 3 5 7 9 11 13
+
+# Otázka 38
+- |
+  38. (5) 
+  Jaký bude výstup následujícího programu? 
+  x = 1
+  begin
+    x = x - 1
+    y = 10 / x
+    x = x + 1
+  rescue
+    y = 0
+    retry
+    y = 1
+  end
+  puts y
+- - 0 
+  - 1 
+  - -1 
+  - * -10 
+  - -5	
+
+# Otázka 39
+- 39. (4) Pro které z následujících řetězců vrátí operátor =~ aplikovaný na regulární výraz /^[+\-]?[0-9]*(.[0-9]+)?(e[+\-]?[0-9]+)?$/ hodnotu různou od nil?
+- - * "-3.5"
+  - * "0x1e55"
+  - * "-.2e1"
+  - * "+2e-78"
+  - * "10"
+
+# Otázka 40
+- 40. (4) Která volání ověří v rámci unit testu, že metoda hello objektu @greeter vrací text "Hello World"?	
+- - assert_equal(@greeter.hello == "Hello World") 
+  - * assert_equal("Hello World", @greeter.hello)
+  - assert_text("Hello World", @greeter, hello) 
+  - * assert(@greeter.hello == "Hello World") 
+  - assert("Hello World", @greeter.hello)
+
+# Otázka 41
+- | 
+  41. (3) Jaký bude výstup následujícího programu ?
+  class MyClass
+    @@var = 0
+    def go
+      @@var = @@var + 1
+    end
+    def say
+      puts @@var
+    end
+  end
+
+  obj1 = MyClass.new
+  obj2 = MyClass.new
+
+  obj1.go
+  obj2.go
+  obj1.say
+- - ***    
+
+# Otázka 42    
+- | 
+  42. (3) Jaký bude výstup následujícího programu ?
+
+  class MyClass
+    def initialize
+      @var = 0
+    end  
+    def go
+      @var = @var + 1
+    end  
+    def say
+      puts @var
+    end
+  end
+
+  obj1 = MyClass.new
+  obj2 = MyClass.new
+
+  obj1.go
+  obj2.go
+  obj1.say
+- - ***
+
+# Otázka 43
+- 43. (3) Které z následujících činností jazyk Ruby umožňuje?
+- - * Přidat metodu do existující třídy
+  - Vytvořit třídu, která dědí ze dvou jiných tříd
+  - * Vytvořit novou třídu
+  - * Vytvořit třídu, která dědí z jiné třídy
+  - * Přepsat metodu existující třídy
+
+# Otázka 44
+- 44. (3) Která z následujících tvrzení platí?
+- - Jazyk Ruby je kompilovaný.
+  - V jazyce Ruby je možné do proměnné přiřadit jen jednou.
+  - Každá proměnná v jazyce Ruby musí mít deklarován datový typ.
+  - Objektový model jazyka Ruby nepoužívá pojmu třída.
+  - * Všechny datové typy v Ruby jsou objekty
+  
+# Otázka 45
+- 45. (4) Pro které z následujících řetězců vrátí operátor =~ aplikovaný na regulární výraz /^[pes]ko(c|st)ka[0-9]*$/ hodnotu různou od nil?	 
+- - * skocka37 
+  - kostka49  
+  - * ekostka 
+  - ekoska2 
+  - * pkocka66 
+  - peskocka1 

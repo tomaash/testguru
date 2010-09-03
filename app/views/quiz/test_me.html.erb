@@ -1,0 +1,14 @@
+<h1>On-line test pro téma <%= @tem.name %></h1>
+
+<% form_for :quiz, :url => {:action => 'evaluate'}, :html => {:name=>'myform'} do |f| %>
+<% @questions.each_with_index do |question,i| %>
+<% cnt = i+1 %>
+<span class="question"> <%= cnt %>. <%= (h question.value).html_newlines %> </span>
+<% question.answers.each do |answer| %>
+<%= check_box_tag "answers[#{cnt}][#{answer.choice}]" %> <%= h answer.value %> <br/>
+<% end %>
+
+<% end %>
+<br/>
+<span style="cursor: pointer"><img src="/images/uu_send.png" onclick="document.myform.submit();" /></span>
+<% end %>

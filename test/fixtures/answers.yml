@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  value: MyText
+  correct: false
+  question_code: MyString
+  question_id: 1
+  choice: MyString
+
+two:
+  code: MyString
+  value: MyText
+  correct: false
+  question_code: MyString
+  question_id: 1
+  choice: MyString

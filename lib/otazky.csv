@@ -1,0 +1,194 @@
+"ID","otazka","moznosti","bodu"
+"01-01","Identifikujte výhody webových aplikací (oproti GUI aplikacím):",PRAVDA,2
+"01-02","Jaké problémy řeší síťový protokol IP?",PRAVDA,2
+"01-03","Co není součástí URL?",PRAVDA,1
+"01-04","Co je hlavní úlohou protokolu TCP?",PRAVDA,1
+"01-05","K čemu slouží aplikační protokol HTTP?",PRAVDA,2
+"01-06","Jaké jsou NEvýhody webových aplikací (proti GUI aplikacím)?",PRAVDA,2
+"01-07","Co je to v síťových technologiích paket?",NEPRAVDA,1
+"01-08","Který internetový/intranetový protokol nepatří mezi tzv. aplikační protokoly?",PRAVDA,1
+"02-01","Které HTML elementy slouží pro strukturování dokumentů?",PRAVDA,2
+"02-02","Jaké jsou vhodné kombinace zadávaných údajů z domény Blue Airlines a typů vstupních polí (Příklad: <input type=""text"" ... />je vhodný pro zadání jména letiště při vytváření nového letiště, jen těžko by zde šlo vybrat ze seznamu)",PRAVDA,2
+"02-03","Jak spolu souvisejí standardy XML a XHTML?",PRAVDA,1
+"02-04","Které HTML elementy se používají pro formátování textu (na úrovni jednotlivých znaků - tedy ne co se týká struktury, odstavců apod.)",PRAVDA,2
+"02-05","Která z následujících možností je správně zapsaným fragmentem XHTML kódu?",PRAVDA,1
+"02-06","Co platí o historickém vývoji HTML?",PRAVDA,2
+"02-07","Co je kořenovým elementem XHTML dokumentů?",PRAVDA,1
+"02-08","Identifikujte chybný řádek v hlavičce XHTML dokumentu:
+01 <html>
+02 <head>
+03   <script src=""ex02.js"" type=""text/javascript""></script>
+04   <title>Moje stranka</title>
+05   <h1>Pokracovani titulku</h1>
+06   <link rel=""stylesheet"" type=""text/css"" href=""ex01.css""/> 
+07 </head>
+08 <body>
+09 ...",PRAVDA,1
+"03-01","Proč existují oddělené jazyky HTML a CSS pro obsah a formátování dokumentů?",PRAVDA,1
+"03-02","Která tvrzení o CSS selektorech jsou platná?",PRAVDA,2
+"03-03","Které z následujících CSS pravidel způsobí zobrazení textu nadpisu (CSS třída ""nadpis"") tučným písmem a to pouze v 2. kapitole následujícího dokumentu (kapitoly představovány elementy <div>)?
+<div id=""kapitola1"">
+  <h1 class=""nadpis"">Nadpis kapitoly 1</h1>
+</div>
+<div id=""kapitola2"">
+  <h1 class=""nadpis"">Nadpis kapitoly 2</h1>
+  <p>Prvni odstavec</p>
+</div>",PRAVDA,2
+"03-04","CSS pravidlo table.seznam td {font-size: 2em;} nastaví velikost písma pro:",PRAVDA,1
+"03-05","Které z následujících CSS pravidel způsobí zobrazení textu nadpisu (CSS třída ""nadpis"") tučným písmem v každé kapitole následujícího dokumentu (kapitoly představovány elementy <div>)?
+<div id=""kapitola1"">
+  <h1 class=""nadpis"">Nadpis kapitoly 1</h1>
+</div>
+<div id=""kapitola2"">
+  <h1 class=""nadpis"">Nadpis kapitoly 2</h1>
+  <p>Prvni odstavec</p>
+</div>",PRAVDA,2
+"03-06","Jaké jsou důvody pro používání CSS?",PRAVDA,2
+"03-07","Jak se změní význam selektoru #hlavni tr td, pokud ho upravíme na #hlavni > tr > td? (element s ID 'hlavni' je tabulka)?",PRAVDA,1
+"03-08","CSS pravidlo table td.seznam {font-size: 2em;} nastaví velikost písma pro:",PRAVDA,1
+"04-01","Úkolem prezentační vrstvy ve webové aplikaci je:",PRAVDA,2
+"04-02","K čemu může například webová aplikace použít tzv. cookies? ",PRAVDA,1
+"04-03","Jakým způsobem jsou odesílána formulářová data z HTML dokumentu na server?",PRAVDA,1
+"04-04","Co platí o fungování cookies?",PRAVDA,2
+"04-05","Který postup pro vytváření dynamického obsahu využívá Ruby on Rails?",PRAVDA,1
+"04-06","Které z vyjmenovaných částí aplikace předpokládá architektura Model-View-Controller pro webové aplikace?",PRAVDA,2
+"04-07","Jaký je rozdíl mezi HTTP metodami GET a POST při odesílání formulářových dat na server?",PRAVDA,1
+"05-01","Jaké služby poskytuje ActiveRecord vývojářům webových aplikací (omezeno na služby popsané v rámci předmětu WEB)?",PRAVDA,2
+"05-02","Vyberte ekvivalent následujícího kódu:
+a = Airport.new
+a.name = 'Prague Airport'
+a.code = 'PRG'
+a.save",PRAVDA,1
+"05-03","Vyberte správné řádky, které je možné vložit (nezávisle) na vyznačené místo do migračního skriptu:
+create_table :airplane do |t|
+  #Misto pro vlozeni radku
+  t.timestamps
+end",PRAVDA,2
+"05-04","Doplňte vhodný řádek do následujícího kódu pro vytvoření nového letiště a jeho vložení do databáze
+
+begin
+  ap = Airport.new
+  ap.name='Prague'
+  ap.code='PRG'
+  #Radek k dopleni
+rescue
+  return 'No airport created'
+end
+return 'Airport Prague created'",PRAVDA,1
+"05-05","K čemu slouží v Ruby on Rails tzv. migrace?",PRAVDA,2
+"05-06","Co jsou tzv. fixtures v Ruby on Rails?",NEPRAVDA,1
+"05-07","Doplňte vhodný řádek do následujícího kódu pro vytvoření nového letiště a jeho vložení do databáze
+
+begin
+  #doplnit řádek
+  ap.name='Prague'
+  ap.code='PRG'
+  ap.save!
+rescue
+  return 'No airport created'
+end
+return 'Airport Prague created'",PRAVDA,1
+"06-01","Co vše je potřeba pro definici obousměrného vztahu 1:N mezi zákazníkem a letenkou?",PRAVDA,2
+"06-02","Které validace potřebujeme, pokud chceme zajistit, že jméno letiště (atribut name) je vždy vyplněné, jedinečné, začíná velkým písmenem a délky alespoň 5 znaků?",PRAVDA,2
+"06-03","Jak vyjádříme ve třídě BoardingPass (palubní vstupenka) vztah typu 1:1 k položce letenky (třída AirticketItem), pokud je cizí klíč reprezentován sloupce airticket_item_id v tabulce boarding_pass? (odpovídá situaci popisované v semináři)",PRAVDA,1
+"06-04","Ve vztahu M:N mezi letem (Flight) a letenkou (Airticket) využíváme vazební tabulku a entitu AirticketItem. Existující kód:
+class Flight < ActiveRecord::Base
+  has_many :airticket_items
+  #Doplnit spravny radek
+end
+
+class AirticketItem < ActiveRecord::Base
+  belongs_to :airticket
+  belongs_to :flight
+end
+
+Jak nyní vytvoříme vazbu (jednosměrnou) mezi letem a letenkou (v tomto směru)?",PRAVDA,2
+"06-05","Ruby on Rails umožňuje vyhledávat objekty v databázi:",PRAVDA,2
+"06-06","Jakým způsobem upozorníme framework Ruby on Rails (potažmo uživatele) o chybě při vyplnění hodnot v ukládaném objektu, pokud používáme vlastní validační metodu validate?",NEPRAVDA,1
+"06-07","Jak vyjádříme ve třídě AirticketItem (položka letenky) vztah typu 1:1 k palubní vstupence (třída BoardingPass), pokud je cizí klíč reprezentován sloupcem airticket_item_id v tabulce boarding_pass? (odpovídá situaci popisované v semináři)",PRAVDA,1
+"07-01","Vyberte správná tvrzení o generátoru scaffold:",PRAVDA,2
+"07-03","Co NEVYTVOŘÍ generátor scaffold?",PRAVDA,1
+"07-04","Jakým způsobem je možné vkládat spustitelný kód do šablon stránek (v odpovědi reprezentován textem ruby_kod)?",PRAVDA,2
+"07-05","Který příkaz by se nejlépe hodil na řádek 04 v následujícím kompletním výpisu těla metody controlleru?
+01 def nazev_metody
+02   @airport = Airport.new(params[:airport])
+03   if @airport.save
+04      #chybějící kód
+05     redirect_to(@airport)
+06   else
+07     render :action => ""new""
+08   end
+09 end ",PRAVDA,1
+"07-06","Které z následujících konstrukcí se mohou vyskytovat ve správné Erb šabloně, která generuje smysluplný HTML kód? ",PRAVDA,2
+"07-07","Která URL jsou korektní pro přístup k controlleru AirportsController pokud použijeme standardní konfiguraci směrování pomocí příkazu map.resources :airports?",NEPRAVDA,2
+"07-08","Který příkaz by se nejlépe hodil na řádek 03 v následujícím kompletním výpisu těla metody controlleru?
+01 def create
+02   @airport = Airport.new(params[:airport])
+03   #doplnit příkaz
+04      flash[:notice] = 'Action completed successfully'
+05     redirect_to(@airport)
+06   else
+07     render :action => ""new""
+08   end
+09 end ",PRAVDA,1
+"08-01","Které volání způsobí v akci update v controlleru Airport použití šablony app/views/airport/update.html.erb pro zobrazení výsledné stránky?",PRAVDA,2
+"08-02","Při práci se sdílenými (partial) šablonami:",PRAVDA,2
+"08-03","Při použití formuláře vytvořeného pomocí metod form_for @airport a text_field :airport, :name je v controlleru název letiště přístupný pomocí:",PRAVDA,1
+"08-04","Nalezněte řádku(řádky) s chybou v následujícím kódu controlleru:
+01  def create
+02    @airport = Airport.new(params[:airport])
+03    if @airport.save
+04      respond_to :action => 'update'
+05    else  
+06      render :action => 'new'
+07    end
+08  end",PRAVDA,1
+"08-05","Jaké znáte typy šablon pro vytváření výstupu v Rails aplikacích?",PRAVDA,2
+"08-06","Kterým příkazem vložíme do rozvrhu (layout) stránky dynamický obsah, generovaný v šablonách, které tento layout používají?",PRAVDA,1
+"08-07","K čemu se používá v controlleru asociativní pole flash?",PRAVDA,1
+"08-08","Co může následovat po volání akce/metody controlleru?",NEPRAVDA,2
+"08-09","Která volání způsobí v akci create v controlleru Airport použití šablony app/views/airport/list.html.erb pro zobrazení výsledné stránky?",PRAVDA,2
+"09-01","Architektura SOAP webových služeb počítá s následujícímí komunikujícími partnery:",PRAVDA,2
+"09-02","Webové služby jsou:",PRAVDA,2
+"09-03","Kterou HTTP metodu využívají REST webové služby pro požadavky na čtení dat?",PRAVDA,1
+"09-04","Která část standardu SOAP webových služeb není příliš používaná a REST služby ji vůbec neznají?",NEPRAVDA,1
+"10-01","Co bude zobrazeno uživateli v dialogovém oknu po spuštění následujícího JavaScript kódu?
+var p=[""a"",""b"",""c""]
+var q = [""d""];
+q.push(p.pop());
+p.unshift(q.shift());
+alert(p.pop());",PRAVDA,1
+"10-02","Kolikrát bude spuštěno tělo následujícího JavaScript cyklu?
+for(var i=0;i<=10;i++) {
+  //tělo cyklu
+}",PRAVDA,1
+"10-03","Co provede volání příkazu:
+for(;;) {
+  #tělo příkazu, nepodstatné
+}",NEPRAVDA,1
+"10-04","K čemu se (mimo jiné) používá Javascript?",NEPRAVDA,1
+"10-05","Jakých hodnot nabývá proměnná prom v průběhu následujícího skriptu?
+var prom;
+var i = prom;
+prom = 3;
+i = 2;
+prom++;
+i--;
+prom--;
+prom=null;",PRAVDA,2
+"10-06","Kolikrát bude spuštěno tělo následujícího JavaScript cyklu?
+for(var i=5;i>0;i--) {
+  //tělo cyklu
+}",PRAVDA,1
+"11-01","Pro spuštění JavaScript funkce enrichDocument (vložena do dokumentu jako součást většího skriptu pomocí elementu <script>) v prohlížeči po úspěšném nahrání celé stránky musíme:",PRAVDA,2
+"11-02","HTML DOM popisuje (mimo jiné):",PRAVDA,2
+"11-03","Které události budete typicky používat pro klientskou validaci formulářových polí?",PRAVDA,1
+"11-04","Ve kterých směrech se můžete v XML dokumentu pohybovat za pomocí DOM  (směry jsou reprezentovány také atributy rozhraní Node, uvedenými v závorkách u jednotlivých možností)",PRAVDA,2
+"11-05","Která (nestandardní) vlastnost elementů v HTML DOM nám umožní zjednodušit vkládání strukturovaného obsahu dovnitř elementu (v porovnání s vytvářením podstromu voláním createElement apod.)?",PRAVDA,1
+"11-06","Které DOM události využijete pro změnu zobrazení elementu ve chvíli, kdy nad ním přejede kurzor a zpětnou změnu, když ho kurzor opět opustí (pokud použijeme Javascript a ne např. CSS)?",NEPRAVDA,1
+"11-07","Jaké typy objektů se vyskytují v základním rozhraní DOM, společném pro obecné XML i XHTML?",PRAVDA,2
+"12-01","Co znamená asynchronnost v případě AJAX?",PRAVDA,1
+"12-02","RJS šablony:",PRAVDA,2
+"12-03","Které volně dostupné knihovny používá Rails pro implementaci AJAX?",PRAVDA,2
+"12-04","Identifikujte výhody AJAX oproti standardnímu způsobu použití HTTP komunikace webovým prohlížečem:",NEPRAVDA,2
+"12-05","Co znamená editace na vyžádání (in-place edit) pomocí AJAX?",PRAVDA,1

@@ -1,0 +1,13 @@
+<%= error_messages_for :import %>
+
+<% form_for(:import, :url => '/import/result', :html => { :multipart => true }) do |f| -%>
+  <p>
+    <label for="topic">Choose topic:</label>
+    <%= f.select "topic", Topic.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => false } %>
+    <label for="import">Choose file:</label>
+    <%= f.file_field :uploaded_data %>
+  </p>
+  <p>
+    <%= submit_tag 'Import' %>
+  </p>
+<% end -%>

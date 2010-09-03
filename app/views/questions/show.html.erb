@@ -1,0 +1,23 @@
+<p>
+  <b>Code:</b>
+  <%=h @question.code %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%=h @question.value %>
+</p>
+
+<p>
+  <b>Multiple:</b>
+  <%=h @question.multiple %>
+</p>
+
+<p>
+  <b>Points:</b>
+  <%=h @question.points %>
+</p>
+
+
+<%= link_to 'Edit', edit_question_path(@question) %> |
+<%= link_to 'Back', questions_path %>

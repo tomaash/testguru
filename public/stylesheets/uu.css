@@ -1,0 +1,40 @@
+body {font-family: Arial;background-color: #F3F3F3;  font-size: 80%;}
+#container {background-color: white;
+            width: 684px; 
+            margin:0px auto;
+}
+#content {
+  padding: 10px;border: 2px solid #ddd;}
+#menu {
+  font-size: 0.9em;
+  font-family: Tahoma, Arial, Helvetica;
+  color: white;
+/*  font-weight: bold;*/
+  text-align: right;
+  background-color: #092977;
+  background-image: url(/images/menu_bar_bg.png);
+  background-repeat: repeat-x;
+  height: 18px;
+  padding-right: 10px;
+/*  padding-top: 3px;*/
+}
+
+#main { padding: 10px;}
+#logo { padding: 0px; margin: 0px; border:0px}
+.question { font-weight: bold;display:block;margin-top: 12px;margin-bottom:3px;}
+
+h1,h2,h3,h4,h5,h6 {color: #535353;
+  border-bottom-color: #CAD9FF;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  font-weight: bold;
+  padding-bottom: 3px;
+  font-size: 12px;
+  }
+  
+h1 { font-size: 15px; text-transform:uppercase; }
+h2 { font-size: 14px; }
+h3 { font-size: 13px; }
+
+.red {color: red;}
+.green {color: green;}

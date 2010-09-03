@@ -1,0 +1,13 @@
+<h1>Import Result</h1>
+<h2> Imported exams </h2>
+<%= "none" if @imported_exams.empty? %>
+<% @imported_exams.each do |exam| %>
+  <p>
+  <%= exam.name %><br/>
+  <%= exam.heading_text %><br/>
+  <%= exam.version_text %><br/>
+  <%= exam.signature_text %><br/>
+  <%= exam.description_text %><br/>
+  <%= exam.questions.map{|x| x.code}.join(', ') %><br/>
+</p>
+<% end %>

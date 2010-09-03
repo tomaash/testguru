@@ -1,0 +1,15 @@
+# Questo file è utizzato per tradurre il nome dei modell/tabelle e dei suoi attributi/colonne
+it:
+  activerecord:
+    # Translate model names. Used in Model.human_name().
+    #models:
+      # For example,
+      #   user: "Dude"
+      # will translate User model name to "Dude"
+    
+    # Translate model attribute names. Used in Model.human_attribute_name(attribute).
+    #attributes:
+      # For example,
+      #   user:
+      #     login: "Handle"
+      # will translate User attribute "login" as "Handle"

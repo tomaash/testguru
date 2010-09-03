@@ -1,0 +1,11 @@
+<%= error_messages_for :import %>
+
+<% form_for(:import, :url => '/exam_import/result', :html => { :multipart => true }) do |f| -%>
+  <p>
+    <label for="import">Choose file:</label>
+    <%= f.file_field :uploaded_data %>
+  </p>
+  <p>
+    <%= submit_tag 'Import' %>
+  </p>
+<% end -%>

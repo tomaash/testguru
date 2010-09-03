@@ -1,0 +1,9 @@
+<% form_for(:export, :url => '/export/result/testguru_export.yaml', :html => { :multipart => true }) do |f| -%>
+  <p>
+    <label for="topic">Choose topic:</label>
+    <%= f.select "topic", Topic.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => false } %>
+  </p>
+  <p>
+    <%= submit_tag 'Export' %>
+  </p>
+<% end -%>
