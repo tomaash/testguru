@@ -2,17 +2,21 @@
 <div class="points">
   Váš výsledek: <span class="red"><%=@percentage%>%</span> (<%= @score %>b, max <%= @max_points %>b)
 </div>
-<p><a href="javascript: history.go(-1)">Opakovat test</a></p>
+<center>
+  <a href="/quiz/test_me/<%=@tem.id%>">
+    <img style="padding-top:15px;padding-bottom:5px" class="button" src="/images/opakovat_test.png"/>
+  </a>
+</center>
 <% @questions.each_with_index do |question,i| %>
-  <% cnt = i+1 %>
-  <table width="100%"><tr>
-    <td valign="top">
-      <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> </span> 
-    </td>
-    <td valign="top" align="right" width="80px">
-      <i>(<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)</i>
-    </td>
-  </tr><tr><td>
+<% cnt = i+1 %>
+<table width="100%"><tr>
+  <td valign="top">
+    <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> </span> 
+  </td>
+  <td valign="top" align="right" width="80px">
+    <i>(<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)</i>
+  </td>
+</tr><tr><td>
   <% question.answers.each do |answer| %>
   <%    
   reaction = @replies[cnt.to_s][answer.choice] 
@@ -27,6 +31,6 @@
   </span>
   <% end %>
 </td></tr></table>
-  <br/>
-  <% end %>
+<br/>
+<% end %>
 
