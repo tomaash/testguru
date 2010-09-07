@@ -5,3 +5,4 @@ doc/app
 .tmtags
 development.sqlite3
 .DS_Store
+nbproject/
