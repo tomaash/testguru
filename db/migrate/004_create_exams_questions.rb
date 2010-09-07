@@ -4,7 +4,7 @@ class CreateExamsQuestions < ActiveRecord::Migration
       t.integer :exam_id
       t.integer :question_id
       t.timestamps
-    endlayout "application"
+    end
   end
 
   def self.down
