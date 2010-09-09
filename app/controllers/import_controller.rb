@@ -1,3 +1,4 @@
+require 'csv'
 class ImportController < ApplicationController
   before_filter :require_user
   layout "application"
@@ -7,7 +8,18 @@ class ImportController < ApplicationController
 
   def result
     begin
-      data = YAML.load(params[:import][:uploaded_data]) #YAML.load(File.new('import.yaml','r').read)
+      file = params[:import][:uploaded_data]
+      if file
+        @extension = file.original_filename.split('.')[-1]
+      else
+        raise "No file uploaded"
+      end
+      #loads data in yaml format, if csv is provided, changes it to yaml
+      data = case @extension
+             when 'yaml' then
+               YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
+             when 'csv' then csv2yaml(file)
+             end
       @topic = Topic.find(params[:import][:topic])
       error = false
       validate_data(data.dup)
@@ -114,6 +126,24 @@ class ImportController < ApplicationController
         end
       end
     end
+  end
+
+  def csv2yaml(file)
+    output = "--- \n"
+    CSV::Reader.parse(file, ',') do |row|
+      if (row[0])
+          output << "- \"#{row[0]} (#{row[2]}) #{row[1]}\"\n"
+          output << "- \n"
+      else
+          if row[2] == 'A'
+              output << "  - \"* #{row[1]}\"\n"
+          else
+              output << "  - \"#{row[1]}\"\n"
+          end
+      end
+    end
+    output << "\n"
+    return YAML.load(output)
   end
 
 end
