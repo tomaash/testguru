@@ -16,10 +16,10 @@ class ImportController < ApplicationController
       end
       #loads data in yaml format, if csv is provided, changes it to yaml
       data = case @extension
-             when 'yaml' then
-               YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
-             when 'csv' then csv2yaml(file)
-             end
+        when 'yaml' then
+          YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
+        when 'csv' then csv2yaml(file)
+      end
       @topic = Topic.find(params[:import][:topic])
       error = false
       validate_data(data.dup)
@@ -132,14 +132,14 @@ class ImportController < ApplicationController
     output = "--- \n"
     CSV::Reader.parse(file, ',') do |row|
       if (row[0])
-          output << "- \"#{row[0]} (#{row[2]}) #{row[1]}\"\n"
-          output << "- \n"
+        output << "- \"#{row[0]} (#{row[2]}) #{row[1]}\"\n"
+        output << "- \n"
       else
-          if row[2] == 'A'
-              output << "  - \"* #{row[1]}\"\n"
-          else
-              output << "  - \"#{row[1]}\"\n"
-          end
+        if row[2] == 'A'
+          output << "  - \"* #{row[1]}\"\n"
+        else
+          output << "  - \"#{row[1]}\"\n"
+        end
       end
     end
     output << "\n"
