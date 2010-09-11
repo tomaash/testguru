@@ -1,3 +1,4 @@
+require 'csv'
 class ExamImportController < ApplicationController
   before_filter :require_user
   layout "application"
@@ -11,8 +12,22 @@ class ExamImportController < ApplicationController
   end
 
   def result
+
     begin
-      data = YAML.load(params[:import][:uploaded_data])
+      file = params[:import][:uploaded_data]
+      if file
+        @extension = file.original_filename.split('.')[-1]
+      else
+        raise "No file uploaded"
+      end
+      #loads data in yaml format, if csv is provided, changes it to yaml
+      data = case @extension
+             when 'yaml' then
+               YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
+             when 'csv' then csv2yaml(file)
+             end
+
+      #data = YAML.load(params[:import][:uploaded_data])
       # p Dir.getwd
       # data = YAML.load(File.new('exams.yaml','r').read)
       error = false
@@ -68,5 +83,49 @@ class ExamImportController < ApplicationController
       e.save
       @imported_exams << e
     end
+  end
+
+  def csv2yaml(file)
+    output = String.new
+    column_names = ["name", "heading", "version", "signature"]
+    columns = {}
+    first_line = true
+
+    #columns, in which questions start to appear in exams file
+    questions_start = 0
+    CSV::Reader.parse(file,',') do |row|
+      #identifies structure of file in the first line in exams file
+      if (first_line)
+        column_names.each do |name|
+          if (row.index(name))
+            columns[name] = row.index(name)
+            if questions_start < columns[name] + 1
+              questions_start = columns[name] + 1
+            end
+          end
+        end
+        first_line = false
+      #and loads data from the remaining lines
+      else
+        output << "- name: #{row[columns['name']]}\n"
+        if columns['heading']
+          output << "  heading: #{row[columns['heading']]}\n"
+        end
+        if columns ['version']
+          output << "  version: #{row[columns['version']]}\n" 
+        end
+        if columns ['signature']
+          output << "  signature: \"#{row[columns['signature']]}\"\n"
+        end
+
+        questions = []
+        questions_start.upto(row.length() - 1) do |i|
+          questions << row[i]
+        end
+        output << "  questions: #{questions.join(' ')}\n"
+        output << "\n"
+      end
+    end
+    return YAML.load(output)
   end
 end
