@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   
   def self.add_header(config)
     config.action_links.add '<img height="10px" src="/images/active_scaffold/default/cross.png"/> Logout', :controller => 'user_sessions/destroy', :page => true
-    config.action_links.add '<img src="/images/active_scaffold/default/arrow_down.gif"/>My Account', :controller => 'account', :action => "", :page => true
+    config.action_links.add '<img src="/images/active_scaffold/default/arrow_down.gif"/>Imports', :controller => 'import', :action => "", :page => true
     config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Exams', :controller => 'exams', :action => 'index', :page => true
     config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Questions', :controller => 'questions', :action => 'index', :page => true
     config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Topics', :controller => 'topics', :action => 'index', :page => true
