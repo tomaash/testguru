@@ -55,6 +55,7 @@ class QuizController < ApplicationController
           end
         end
       end
+      session[:name] = @course.name
       session[:questions] = @questions
       render :action => 'test_me'
     else

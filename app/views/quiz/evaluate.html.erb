@@ -1,11 +1,13 @@
-<h1> Vyhodnocení testu <%= @tem.name %> </h1>
+<h1> Vyhodnocení testu <%= @name %> </h1>
 <div class="points">
   Váš výsledek: <span class="red"><%=@percentage%>%</span> (<%= @score %>b, max <%= @max_points %>b)
 </div>
 <center>
+  <% if @tem %>
   <a href="/quiz/test_me/<%=@tem.id%>">
     <img style="padding-top:15px;padding-bottom:5px" class="button" src="/images/opakovat_test.png"/>
   </a>
+  <% end %>
 </center>
 <% @questions.each_with_index do |question,i| %>
 <% cnt = i+1 %>
