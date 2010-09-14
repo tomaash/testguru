@@ -4,5 +4,6 @@ class TopicsController < ApplicationController
      config.list.columns.exclude :created_at, :updated_at, :exams, :questions, :questionsets
      config.create.columns.exclude :created_at, :updated_at, :exams, :questions, :questionsets
      config.update.columns.exclude :created_at, :updated_at, :exams, :questions, :questionsets
+     config.columns[:course].form_ui = :select
    end
 end

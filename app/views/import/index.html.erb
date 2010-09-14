@@ -1,13 +1,21 @@
 <%= error_messages_for :import %>
 
 <% form_for(:import, :url => '/import/result', :html => { :multipart => true }) do |f| -%>
-  <p>
-    <label for="topic">Choose topic:</label>
-    <%= f.select "topic", Topic.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => false } %>
-    <label for="import">Choose file:</label>
-    <%= f.file_field :uploaded_data %>
-  </p>
-  <p>
-    <%= submit_tag 'Import' %>
-  </p>
+  <table>
+    <tr>
+      <td><label for="course">Choose course:</label></td>
+      <td><%= f.select "course", Course.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true } %></td>
+    </tr>
+  <tr>
+  <td><label for="topic">Or create new:</label></td>
+  <td><%= f.text_field "course_new" %></td>
+  </tr>
+  <tr>
+    <td><label for="import">Choose file:</label></td>
+    <td><%= f.file_field :uploaded_data %></td>
+  </tr>
+  <tr>
+    <td><%= submit_tag 'Import' %></td>
+  </tr>
+</table>
 <% end -%>

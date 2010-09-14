@@ -22,7 +22,7 @@ class ExamsController < ApplicationController
     
     ApplicationController.add_header(config)
     
-    config.columns[:template].ui_type = :select
+    config.columns[:template].form_ui = :select
   end
 
 

@@ -16,16 +16,26 @@ class ImportController < ApplicationController
       end
       #loads data in yaml format, if csv is provided, changes it to yaml
       data = case @extension
-        when 'yaml' then
-          YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
-        when 'csv' then csv2yaml(file)
+      when 'yaml' then
+        YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
+      when 'csv' then csv2yaml(file)
       end
-      @topic = Topic.find(params[:import][:topic])
+      if not params[:import][:course].blank?
+        @course = Course.find(params[:import][:course])
+      elsif not params[:import][:course_new].blank?
+        if Course.find_by_name(params[:import][:course_new])
+          raise "Course with this name already exists"
+        end
+        @course = Course.create({:name =>params[:import][:course_new]})
+      else
+        raise "Please specify course"
+      end
+      p @course
       error = false
       validate_data(data.dup)
       load_data(data)
-    rescue
-      error = $!.to_s
+    # rescue
+      # error = $!.to_s
     end
     if error
       flash[:notice] = error
@@ -36,11 +46,12 @@ class ImportController < ApplicationController
   private
 
   def parse_question(question_data)
-    slice_question = question_data.split(/[.()]/)
-    code = slice_question[0].strip
-    points = slice_question[2].strip
+    slice_question = question_data.split(/[\/.()]/)
+    topic = slice_question[0].strip
+    code = slice_question[1].strip
+    points = slice_question[3].strip
     question = question_data.strip.sub(/^.*\.\s*\(\d+\)\s*/,"")
-    return code.strip, points.to_i, question.strip
+    return topic.strip, code.strip, points.to_i, question.strip
   end
 
   def validate_data(data_test)
@@ -61,10 +72,16 @@ class ImportController < ApplicationController
       if answer_classes.include?(Array) or answer_classes.include?(Hash)
         raise "Data series mismatch - Answers must contain strings only"+error_string
       end
-      code, points, question = parse_question(question_data)
+      topic, code, points, question = parse_question(question_data)
       raise "Question must not be empty"+error_string if question.strip.empty?
       raise "Question points must be > 0"+error_string if points < 1
       raise "Question must have a code"+error_string if code.strip.empty?
+      raise "Question must have a topic"+error_string if topic.strip.empty?
+      if existing_topic = Topic.find_by_name(topic)
+        if existing_topic.course && existing_topic.course != @course
+          raise "You are trying to import to another course's topic"
+        end
+      end
       one_correct = false
       answers.each do |answer_data|
         correct = false
@@ -79,7 +96,7 @@ class ImportController < ApplicationController
       # end
     end
   end
-  
+
   def load_data(data)
     @imported_questions=[]
     @replaced_questions=[]
@@ -89,18 +106,22 @@ class ImportController < ApplicationController
       break if not answers
       points = 0
       replace_flag = false
-      code, points, question = parse_question(question_data)
+      topic, code, points, question = parse_question(question_data)
       Question.transaction do
-        exists = Question.find_by_code(code)
-        if exists
-          q = exists
-        else
-          q = Question.new
-        end
+        # exists = Question.find_by_code(code)
+        #         if exists
+        #           q = exists
+        #         else
+        #           q = Question.new
+        #         end
+        q = Question.find_by_code(code) || Question.new
+        topic_object = Topic.find_by_name(topic) || Topic.create(:name => topic)
+        topic_object.course ||= @course
+        topic_object.save
         q.code = code
         q.value = question.strip
         q.points = points
-        q.topic = @topic
+        q.topic = topic_object
         q.save!
         alphabet = ('a'..'z').to_a
         if answers.length==1 and answers[0].strip=="***"
@@ -134,13 +155,13 @@ class ImportController < ApplicationController
     CSV::Reader.parse(file, ',') do |row|
       if (row[0])
         output << answers unless answers.empty?
-        output << "#{row[0]}. (#{row[2]}) #{row[1]}"
+        output << "#{row[0]}/#{row[1]}. (#{row[3]}) #{row[2]}"
         answers = []
       else
         if row[2] == 'A'
-          answers << "* #{row[1]}"
+          answers << "* #{row[2]}"
         else
-          answers << "#{row[1]}"
+          answers << "#{row[2]}"
         end
       end
     end

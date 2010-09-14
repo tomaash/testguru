@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
     config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Questions', :controller => 'questions', :action => 'index', :page => true
     config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Topics', :controller => 'topics', :action => 'index', :page => true
     config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Templates', :controller => 'templates', :action => 'index', :page => true
+    config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Courses', :controller => 'courses', :action => 'index', :page => true
     # config.action_links.add '<img src="/images/active_scaffold/default/arrow_up.gif"/>Questionsets', :controller => 'questionsets', :action => 'index', :page => true
   end
   
