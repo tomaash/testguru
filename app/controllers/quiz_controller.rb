@@ -22,36 +22,44 @@ class QuizController < ApplicationController
     @course = Course.find_by_name(params[:s])
     @amount = params[:q].to_i
     @topics = params[:t].split(',').map{|x| Topic.find_by_name(x)}
-    @name = @course.name
-    @title = @name + " - Unicorn College"
-    from_topic = @amount/@topics.length
-    additional = @amount % @topics.length
-    @questions = []
-    preffered_topic = rand(@topics.length)
-    # rozdelit otazky rovnomerne, preferred topic je to ze kteryho se vybere pokud se na vsechny nedostava rovnomerne
-    @topics.each_with_index do |topic,i|
-      pool_size = from_topic
-      pool_size += additional if i == preffered_topic
-      if pool_size > 0
-        pool = Question.find_all_by_topic_id(topic.id)
-        pool = pool.reject{|x| x.answers.size < 2}
-        @questions += pool.sort_by{rand(1000)}[0..(pool_size-1)]
-      end
-    end
-    # pokud po rovnomernem vyberu neni dost otazek, tak se to doplni ze vsech bez ohledu na rovnomernost tak, aby se zadne neopakovaly
-    if @questions.length < @amount
-      all_questions = []
-      @topics.each do |topic|
-        all_questions += Question.find_all_by_topic_id(topic.id)
-      end
-      all_questions.each do |question|
-        if @questions.length < @amount and not @questions.include?(question)
-          @questions << question
+    @errors = ""
+    @errors += "Cannot have less questions than 1\n" if @amount < 1
+    @errors += "Course does not exist\n" if not @course
+    @errors += "One or more topics does not exist\n" if params[:t].blank? or @topics.include?(nil)
+    if @errors == ""
+      @name = @course.name
+      @title = @name + " - Unicorn College"
+      from_topic = @amount/@topics.length
+      additional = @amount % @topics.length
+      @questions = []
+      preffered_topic = rand(@topics.length)
+      # rozdelit otazky rovnomerne, preferred topic je to ze kteryho se vybere pokud se na vsechny nedostava rovnomerne
+      @topics.each_with_index do |topic,i|
+        pool_size = from_topic
+        pool_size += additional if i == preffered_topic
+        if pool_size > 0
+          pool = Question.find_all_by_topic_id(topic.id)
+          pool = pool.reject{|x| x.answers.size < 2}
+          @questions += pool.sort_by{rand(1000)}[0..(pool_size-1)]
         end
       end
+      # pokud po rovnomernem vyberu neni dost otazek, tak se to doplni ze vsech bez ohledu na rovnomernost tak, aby se zadne neopakovaly
+      if @questions.length < @amount
+        all_questions = []
+        @topics.each do |topic|
+          all_questions += Question.find_all_by_topic_id(topic.id)
+        end
+        all_questions.each do |question|
+          if @questions.length < @amount and not @questions.include?(question)
+            @questions << question
+          end
+        end
+      end
+      session[:questions] = @questions
+      render :action => 'test_me'
+    else
+      render :action => 'error'
     end
-    session[:questions] = @questions
-    render :action => 'test_me'
   end
 
   def evaluate
