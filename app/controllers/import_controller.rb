@@ -128,25 +128,6 @@ class ImportController < ApplicationController
     end
   end
 
-  # def csv2yaml(file)
-  #   output = "--- \n"
-  #   CSV::Reader.parse(file, ',') do |row|
-  #     if (row[0])
-  #       output << "- \"#{row[0]}. (#{row[2]}) #{row[1]}\"\n"
-  #       output << "- \n"
-  #     else
-  #       if row[2] == 'A'
-  #         output << "  - \"* #{row[1]}\"\n"
-  #       else
-  #         output << "  - \"#{row[1]}\"\n"
-  #       end
-  #     end
-  #   end
-  #   output << "\n"
-  #   p YAML.load(output)
-  #   return YAML.load(output)
-  # end
-
   def csv2yaml(file)
     output = []
     answers = []
@@ -164,7 +145,6 @@ class ImportController < ApplicationController
       end
     end
     output << answers unless answers.empty?
-    p output
     return output
   end
 
