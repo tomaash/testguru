@@ -50,6 +50,7 @@ class QuizController < ApplicationController
         end
       end
     end
+    session[:questions] = @questions
     render :action => 'test_me'
   end
 
