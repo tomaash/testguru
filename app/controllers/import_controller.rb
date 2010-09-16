@@ -105,16 +105,15 @@ class ImportController < ApplicationController
       answers = data.shift
       break if not answers
       points = 0
-      replace_flag = false
+      
       topic, code, points, question = parse_question(question_data)
       Question.transaction do
-        # exists = Question.find_by_code(code)
-        #         if exists
-        #           q = exists
-        #         else
-        #           q = Question.new
-        #         end
-        q = Question.find_by_code(code) || Question.new
+        if not q = Question.find_by_code(code)
+          q = Question.new
+          replace_flag = false
+        else
+          replace_flag = true
+        end
         topic_object = Topic.find_by_name(topic) || Topic.create(:name => topic)
         topic_object.course ||= @course
         topic_object.save
@@ -158,7 +157,7 @@ class ImportController < ApplicationController
         output << "#{row[0]}/#{row[1]}. (#{row[3]}) #{row[2]}"
         answers = []
       else
-        if row[2] == 'A'
+        if row[3] == 'A'
           answers << "* #{row[2]}"
         else
           answers << "#{row[2]}"
