@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
     config.update.columns = [:topic, :code, :value, :points, :answers]
     config.create.columns = [:topic, :code, :value, :points, :answers]
     config.show.columns   = [:topic, :code, :value, :points, :answers]
-    config.columns[:topic].ui_type = :select
+    config.columns[:topic].form_ui = :select
     ApplicationController.add_header(config)
     # config.list.columns << :first_and_last_name
     # If you want to customize the metadata on the virtual field, you need to add it to the main columns object.
