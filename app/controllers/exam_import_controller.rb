@@ -24,7 +24,7 @@ class ExamImportController < ApplicationController
       data = case @extension
              when 'yaml' then
                YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
-             when 'csv' then csv2yaml(file)
+             when 'csv' then load_csv(file)
              end
 
       #data = YAML.load(params[:import][:uploaded_data])
@@ -85,14 +85,15 @@ class ExamImportController < ApplicationController
     end
   end
 
-  def csv2yaml(file)
+  def load_csv(file)
     output = String.new
-    column_names = ["name", "heading", "version", "signature"]
+    column_names = ['name', 'heading', 'version', 'signature']
     columns = {}
     first_line = true
 
     #columns, in which questions start to appear in exams file
     questions_start = 0
+    exams = []
     CSV::Reader.parse(file,',') do |row|
       #identifies structure of file in the first line in exams file
       if (first_line)
@@ -107,25 +108,26 @@ class ExamImportController < ApplicationController
         first_line = false
       #and loads data from the remaining lines
       else
-        output << "- name: #{row[columns['name']]}\n"
+        exam = {}
+        exam['name'] = row[columns['name']]
         if columns['heading']
-          output << "  heading: #{row[columns['heading']]}\n"
+          exam['heading'] = row[columns['heading']]
         end
         if columns ['version']
-          output << "  version: #{row[columns['version']]}\n" 
+          exam['version'] = row[columns['version']]
         end
         if columns ['signature']
-          output << "  signature: \"#{row[columns['signature']]}\"\n"
+          exam['signature'] = row[columns['signature']]
         end
 
         questions = []
         questions_start.upto(row.length() - 1) do |i|
           questions << row[i]
         end
-        output << "  questions: #{questions.join(' ')}\n"
-        output << "\n"
+        exam['questions'] = questions.join(' ')
+        exams << exam
       end
     end
-    return YAML.load(output)
+    return exams
   end
 end
