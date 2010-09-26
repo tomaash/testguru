@@ -1,0 +1,22 @@
+<%= javascript_include_tag :defaults %>
+<h1>ahoj</h1>
+<% form_tag :action=> 'process_url', :method=>'put' do %>
+  <p>
+  <%= label_tag :s, "Předmět" %>
+  <%= select_tag 's', options_for_select(@courses),
+    :onchange => remote_function(:url => {:action => 'get_topics'}, 
+                                 :update => 'topic_id_container',
+                                 :with => "$('s').serialize()") %>
+  </p>
+  <p>
+  <div id="topic_id_container">
+    vyber předmět
+  </div>
+  <p>
+  <%= label_tag :q, "Počet otázek" %>
+  <%= text_field_tag 'q', ''%>
+  </p>
+  <%= submit_tag 'Submit' %>
+  </p>
+<% end %>
+

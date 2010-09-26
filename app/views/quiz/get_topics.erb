@@ -1,0 +1,6 @@
+<% @topics.each do |topic|%>
+  <p>
+  <%= check_box_tag "t[#{topic}]", topic %>
+  <%= label_tag :t, "#{topic}" %>
+  </p>
+<% end %>
