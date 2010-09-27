@@ -1,4 +1,9 @@
 <%= javascript_include_tag :defaults %>
+
+<% if flash[:error] -%>
+<div id="error"><%= flash[:error] %></div>
+<% end -%>
+
 <h1>Výběr testu</h1>
 <% form_tag :action=> 'process_url', :method=>'put' do %>
   <p>
@@ -10,13 +15,15 @@
   </p>
   <p>
   <div id="topic_id_container">
-    vyber předmět
   </div>
   <p>
   <%= label_tag :q, "Počet otázek" %>
-  <%= text_field_tag 'q', ''%>
+  <%= text_field_tag 'q', '', :onchange => "TestPositiveness(document.getElementById('q').value)"%>
   </p>
   <%= submit_tag 'Submit' %>
   </p>
 <% end %>
+<script type = "text/javascript:>
+  document.getElementByName('commit').disabled = true;
+</script>
 

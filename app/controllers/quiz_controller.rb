@@ -109,10 +109,18 @@ class QuizController < ApplicationController
 
   #changes params to desired format for test_url
   def process_url
-    #params[:t]=['web-TESTGURU_EXPORT2', 'web-EXAM1']
-    topics = params[:t].keys.join(',')
-    redirect_to :action => 'test_url', :t => topics, :s => params[:s],
+    error = false
+    unless params.has_key?(:t)
+      flash[:error] = 'Není vybráno žádné téma'
+      error = true
+    end
+    if error
+      redirect_to :action => 'create_url'
+    else
+      topics = params[:t].keys.join(',')
+      redirect_to :action => 'test_url', :t => topics, :s => params[:s],
       :authenticity_token => params[:authenticity_token], :q => params[:q]
+    end
 
   end
 end

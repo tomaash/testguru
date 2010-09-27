@@ -1,4 +1,7 @@
 <h3>Témata</h3>
+<% if @topics.empty? then %>
+  Tento předmět neobsahuje žádná témata. Vyberte prosím jiný.
+<% end %>
 <% @topics.each do |topic|%>
   <p>
   <%= check_box_tag "t[#{topic}]", topic %>
