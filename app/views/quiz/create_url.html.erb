@@ -25,7 +25,7 @@ document.observe("dom:loaded", function() {
   <div id="topic_id_container">
   </div>
   <%= label_tag :q, "Počet otázek" %>
-  <%= text_field_tag 'q', '', :onchange => "TestPositiveness(document.getElementById('q').value)"%>
+  <%= text_field_tag 'q', '', :onblur => "TestPositiveness(document.getElementById('q').value)"%>
 </p>
 <p>
 <%= submit_tag 'Submit', :id => 'commit' %>
