@@ -1,4 +1,4 @@
-<h1>On-line test pro téma <%= @name %></h1>
+<h1>Self-test z předmětu <%= @name %></h1>
 
 <% form_for :quiz, :url => {:action => 'evaluate'}, :html => {:name=>'myform'} do |f| %>
 <% @questions.each_with_index do |question,i| %>
