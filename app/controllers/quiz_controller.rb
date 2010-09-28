@@ -119,7 +119,8 @@ class QuizController < ApplicationController
     else
       topics = params[:t].keys.join(',')
       redirect_to :action => 'test_url', :t => topics, :s => params[:s],
-      :authenticity_token => params[:authenticity_token], :q => params[:q]
+      # :authenticity_token => params[:authenticity_token], 
+      :q => params[:q]
     end
 
   end

@@ -4,26 +4,34 @@
 <div id="error"><%= flash[:error] %></div>
 <% end -%>
 
+<% javascript_tag do %>
+document.observe("dom:loaded", function() {
+  <%= remote_function(:url => {:action => 'get_topics'}, 
+  :update => 'topic_id_container',
+  :with => "$('s').serialize()") %>
+});
+<% end %>
+
 <h1>Výběr testu</h1>
 <% form_tag :action=> 'process_url', :method=>'put' do %>
-  <p>
+<p>
   <%= label_tag :s, "Předmět" %>
   <%= select_tag 's', options_for_select(@courses),
-    :onchange => remote_function(:url => {:action => 'get_topics'}, 
-                                 :update => 'topic_id_container',
-                                 :with => "$('s').serialize()") %>
-  </p>
-  <p>
+  :onchange => remote_function(:url => {:action => 'get_topics'}, 
+  :update => 'topic_id_container',
+  :with => "$('s').serialize()") %>
+</p>
+<p>
   <div id="topic_id_container">
   </div>
-  <p>
   <%= label_tag :q, "Počet otázek" %>
   <%= text_field_tag 'q', '', :onchange => "TestPositiveness(document.getElementById('q').value)"%>
-  </p>
-  <%= submit_tag 'Submit' %>
-  </p>
+</p>
+<p>
+<%= submit_tag 'Submit', :id => 'commit' %>
+</p>
 <% end %>
-<script type = "text/javascript:>
-  document.getElementByName('commit').disabled = true;
+<script type = "text/javascript">
+document.getElementById('commit').disabled = true;
 </script>
 
