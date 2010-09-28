@@ -5,7 +5,7 @@ function TestPositiveness(number) {
   reg = /^\d+$/;
   if (!(number = parseInt(number) > 0)) {
     alert('Počet otázek musí být kladný');
-    //document.getElementById("commit").disabled = true;
-  }
-
+    document.getElementById("commit").disabled = true;
+  } else
+  document.getElementById("commit").disabled = false;
 }
