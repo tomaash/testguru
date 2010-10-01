@@ -16,7 +16,7 @@ class Question < ActiveRecord::Base
   
   def is_multiple
     numtrue = self.answers.map{|x| x.correct}.select{|x| x==true}.size
-    if numtrue == 1 and self.points <= 3
+    if numtrue == 1 #and self.points <= 3
       return false
     else
       return true
