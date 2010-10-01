@@ -44,16 +44,17 @@ class ImportController < ApplicationController
      if not params[:import][:course].blank?
       course_name = params[:import][:course].upcase
       @course = Course.find(course_name)
-    elsif not params[:import][:course_new].blank?
-      new_course_name = params[:import][:course_new].upcase
-      if Course.find_by_name(new_course_name)
-        raise "Course with this name already exists"
+    elsif not params[:import][:course_new_code].blank?
+      new_course_code = params[:import][:course_new_code].upcase
+      new_course_name = params[:import][:course_new_name]
+      if Course.find_by_code(new_course_code)
+        raise "Course with this code already exists"
       end
-      @course = Course.create({:name =>new_course_name})
+      @course = Course.create({:code =>new_course_code, :name => new_course_name})
     else
       raise "Please specify course"
     end
-    topic_name = @course.name+"-"+@filename.upcase
+    topic_name = @course.code+"-"+@filename.upcase
     @topic = Topic.find_by_name(topic_name) || Topic.create(:name => topic_name, :course => @course)
   end
 

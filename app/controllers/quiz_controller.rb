@@ -57,6 +57,7 @@ class QuizController < ApplicationController
       end
       session[:name] = @course.name
       session[:questions] = @questions
+      @max_points = @questions.map{|x| x.points}.inject{|x,y| x+y}
       render :action => 'test_me'
     else
       render :action => 'error'
