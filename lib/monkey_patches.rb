@@ -26,6 +26,6 @@
 
 class String
   def html_newlines
-    self.gsub("\n","<br/>").gsub(" ","&nbsp;")
+    self.gsub("\n","<br/>")
   end
 end
