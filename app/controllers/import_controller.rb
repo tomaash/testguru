@@ -40,22 +40,31 @@ class ImportController < ApplicationController
     return data
   end
 
+  # def setup_course_and_topic
+  #     if not params[:import][:course].blank?
+  #      course_name = params[:import][:course].upcase
+  #      @course = Course.find(course_name)
+  #    elsif not params[:import][:course_new_code].blank?
+  #      new_course_code = params[:import][:course_new_code].upcase
+  #      new_course_name = params[:import][:course_new_name]
+  #      if Course.find_by_code(new_course_code)
+  #        raise "Course with this code already exists"
+  #      end
+  #      @course = Course.create({:code =>new_course_code, :name => new_course_name})
+  #    else
+  #      raise "Please specify course"
+  #    end
+  #    topic_name = @course.code+"-"+@filename.upcase
+  #    @topic = Topic.find_by_name(topic_name) || Topic.create(:name => topic_name, :course => @course)
+  #  end
+ 
   def setup_course_and_topic
-     if not params[:import][:course].blank?
-      course_name = params[:import][:course].upcase
-      @course = Course.find(course_name)
-    elsif not params[:import][:course_new_code].blank?
-      new_course_code = params[:import][:course_new_code].upcase
-      new_course_name = params[:import][:course_new_name]
-      if Course.find_by_code(new_course_code)
-        raise "Course with this code already exists"
-      end
-      @course = Course.create({:code =>new_course_code, :name => new_course_name})
-    else
-      raise "Please specify course"
-    end
-    topic_name = @course.code+"-"+@filename.upcase
-    @topic = Topic.find_by_name(topic_name) || Topic.create(:name => topic_name, :course => @course)
+     course_code = @filename[0,3].upcase
+     topic_name = @filename[4,255]
+     @course = Course.find_by_code(course_code)
+     raise "Course #{course_code} does not exist" if not @course
+    topic_name_course = @course.code+"-"+topic_name
+    @topic = Topic.find_by_name(topic_name_course) || Topic.create(:name => topic_name_course, :course => @course)
   end
 
   def parse_question(question_data)
