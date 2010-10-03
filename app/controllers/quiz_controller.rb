@@ -19,10 +19,10 @@ class QuizController < ApplicationController
   end
 
   def test_url
-    @course = Course.find_by_code(params[:s])
+    @course = Course.find_by_id(params[:s])
     @amount = params[:q].to_i
-    topic_names = params[:t].split(',').map{|x| @course.code+"-"+x}
-    @topics = topic_names.map{|x| Topic.find_by_name(x)}
+    topic_ids = params[:t].split(',')
+    @topics = topic_ids.map{|x| Topic.find_by_id(x)}
     @errors = ""
     @errors += "Cannot have less questions than 1\n" if @amount < 1
     @errors += "Course does not exist\n" if not @course
@@ -106,7 +106,7 @@ class QuizController < ApplicationController
 
   def get_topics
     course = Course.find(params[:s])
-    @topics  = Topic.find_all_by_course_id(course.id, :order => 'name').map {|c| [c.nice_name]}
+    @topics  = Topic.find_all_by_course_id(course.id, :order => 'name')
   end
 
   #changes params to desired format for test_url
@@ -119,8 +119,8 @@ class QuizController < ApplicationController
     if error
       redirect_to :action => 'create_url'
     else
-      topics = params[:t].keys.join(',')
-      redirect_to :action => 'test_url', :t => topics, :s => Course.find(params[:s]).code,
+      topics = params[:t].values.join(',')
+      redirect_to :action => 'test_url', :t => topics, :s => params[:s],
       # :authenticity_token => params[:authenticity_token], 
       :q => params[:q]
     end
