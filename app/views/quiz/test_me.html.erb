@@ -15,7 +15,7 @@ Maximální počet bodů: <b><%= @max_points %></b>
     <i>(<%= question.points%>b)</i>
   </td>
 </tr><tr><td>
-<% question.answers.sort_by{rand}.each do |answer| %>
+<% question.answers_rand.each do |answer| %>
 
 <% if question.is_multiple %>
 <%= check_box_tag "answers[#{cnt}][#{answer.choice}]" %> 

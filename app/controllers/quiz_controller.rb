@@ -56,6 +56,7 @@ class QuizController < ApplicationController
           end
         end
       end
+      @questions.each{|x| x.randomize}
       session[:name] = @course.name
       session[:questions] = @questions
       @max_points = @questions.map{|x| x.points}.inject{|x,y| x+y}

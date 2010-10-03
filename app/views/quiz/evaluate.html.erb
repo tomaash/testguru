@@ -19,7 +19,7 @@
     <i>(<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)</i>
   </td>
 </tr><tr><td>
-  <% question.answers.each do |answer| %>
+  <% question.answers_rand.each do |answer| %>
   <%    
   reaction = @replies[cnt.to_s][answer.choice] 
   %>

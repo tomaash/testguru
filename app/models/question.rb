@@ -1,4 +1,8 @@
 class Question < ActiveRecord::Base
+  attr_reader :answers_rand
+  def randomize
+    @answers_rand = self.answers.sort_by{rand}
+  end
   validates_presence_of :value, :points, :topic
   validates_numericality_of :points
   has_many :answers, :order => 'choice ASC', :dependent => :destroy
