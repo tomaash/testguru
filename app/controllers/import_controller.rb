@@ -170,7 +170,7 @@ class ImportController < ApplicationController
         output << "#{row[0]}. (#{row[2]}) #{row[1]}"
         answers = []
       else
-        if row[2] == 'A'
+        if row[2] =~ /[A-Z]/
           answers << "* #{row[1]}"
         else
           answers << "#{row[1]}"
