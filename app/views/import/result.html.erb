@@ -3,9 +3,9 @@
 <%= "none" if @imported_questions.empty? %>
 <% @imported_questions.each do |question| %>
   <p>
-  <%= question.value %><br/>
+  <%= question.value %> (<%= question.points %>)<br/>
   <% question.answers.each do |answer| %>
-    - <%= answer.value %> <br/>
+    - <%= "* " if answer.correct %><%= answer.value %> <br/>
   <% end %>
 </p>
 <% end %>
@@ -14,9 +14,9 @@
 <%= "none" if @replaced_questions.empty? %>
 <% @replaced_questions.each do |question| %>
   <p>
-  <%= question.value %><br/>
+  <%= question.value %> (<%= question.points %>)<br/>
   <% question.answers.each do |answer| %>
-    - <%= answer.value %> <br/>
+    - <%= "* " if answer.correct %><%= answer.value %> <br/>
   <% end %>
   </p>
 <% end %>
