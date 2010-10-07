@@ -1,4 +1,6 @@
 require 'csv'
+DEFAULT_POINTS = 3
+
 class ImportController < ApplicationController
   before_filter :require_user
   layout "application"
@@ -95,7 +97,8 @@ class ImportController < ApplicationController
       end
       code, points, question = parse_question(question_data)
       raise "Question must not be empty"+error_string if question.strip.empty?
-      raise "Question points must be > 0"+error_string if points < 1
+      # Relax, default points
+      # raise "Question points must be > 0"+error_string if points < 1
       raise "Question must have a code"+error_string if code.strip.empty?
       one_correct = false
       answers.each do |answer_data|
@@ -120,8 +123,8 @@ class ImportController < ApplicationController
       answers = data.shift
       break if not answers
       points = 0
-
       code, points, question = parse_question(question_data)
+      points = DEFAULT_POINTS if points < 1
       full_code = @topic.name+"-"+code
       Question.transaction do
         if not q = Question.find_by_code(full_code)
@@ -167,7 +170,9 @@ class ImportController < ApplicationController
     CSV::Reader.parse(file, ',') do |row|
       if (row[0])
         output << answers unless answers.empty?
-        output << "#{row[0]}. (#{row[2]}) #{row[1]}"
+        points = row[2].to_i
+        points = DEFAULT_POINTS if points < 1
+        output << "#{row[0]}. (#{points}) #{row[1]}"
         answers = []
       else
         if row[2] =~ /[A-Z]/
