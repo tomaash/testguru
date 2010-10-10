@@ -8,6 +8,8 @@ class ImportController < ApplicationController
   end
 
   def result
+    @imported_questions=[]
+    @replaced_questions=[]
     file = params[:import][:uploaded_data]
     error = false
     parse_data(file) do |data|
@@ -38,21 +40,26 @@ class ImportController < ApplicationController
     when 'yaml' then
       yield YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
     when 'csv' then yield csv2yaml(file)
-    when 'zip' then unpack_zip(file) do |i| 
-      parse_data(i) {|x| yield x}
+    when 'zip' then unpack_zip(file) do |i|
+        parse_data(i) {|x| yield x}
+      end
     end
-    end
-    #yield data unless @extension.downcase == 'zip'
   end
 
   def unpack_zip(file)
+    #function parse_data expects rails "magicked" tempfile (includes method
+    #original_filename)
+    #open zip file
     Zip::ZipInputStream::open(file.path) do |io|
+      #iterate over contents of zip file
       while (entry = io.get_next_entry)
         filename = entry.name
+        #pack every content into a tempfile
         temp = Tempfile.new(entry.name)
         a = File.open(temp.path, 'w')
         a.write(io.read)
         a.close
+        #and add original_filename method to it
         temp.instance_variable_set(:@original_filename, entry.name)
         def temp.original_filename
           return @original_filename
@@ -135,8 +142,6 @@ class ImportController < ApplicationController
   end
 
   def load_data(data)
-    @imported_questions=[]
-    @replaced_questions=[]
     while true
       question_data = data.shift.to_s
       answers = data.shift
