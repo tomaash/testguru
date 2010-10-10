@@ -1,4 +1,5 @@
 require 'csv'
+require 'zip/zip'
 class ImportController < ApplicationController
   before_filter :require_user
   layout "application"
@@ -7,14 +8,16 @@ class ImportController < ApplicationController
   end
 
   def result
-    begin
-      error = false
-      data = parse_data
-      setup_course_and_topic
-      validate_data(data.dup)
-      load_data(data)
-    rescue
-      error = $!.to_s
+    file = params[:import][:uploaded_data]
+    error = false
+    parse_data(file) do |data|
+      begin
+        setup_course_and_topic
+        validate_data(data.dup)
+        load_data(data)
+      rescue
+        error = $!.to_s
+      end
     end
     if error
       flash[:notice] = error
@@ -24,20 +27,39 @@ class ImportController < ApplicationController
 
   private
 
-  def parse_data
-    file = params[:import][:uploaded_data]
+  def parse_data(file)
     if file
       @filename, @extension = file.original_filename.split('.')
     else
       raise "No file uploaded"
     end
     #loads data in yaml format, if csv is provided, changes it to yaml
-    data = case @extension.downcase
+    case @extension.downcase
     when 'yaml' then
-      YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
-    when 'csv' then csv2yaml(file)
+      yield YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
+    when 'csv' then yield csv2yaml(file)
+    when 'zip' then unpack_zip(file) do |i| 
+      parse_data(i) {|x| yield x}
     end
-    return data
+    end
+    #yield data unless @extension.downcase == 'zip'
+  end
+
+  def unpack_zip(file)
+    Zip::ZipInputStream::open(file.path) do |io|
+      while (entry = io.get_next_entry)
+        filename = entry.name
+        temp = Tempfile.new(entry.name)
+        a = File.open(temp.path, 'w')
+        a.write(io.read)
+        a.close
+        temp.instance_variable_set(:@original_filename, entry.name)
+        def temp.original_filename
+          return @original_filename
+        end
+        yield temp
+      end
+    end
   end
 
   # def setup_course_and_topic
