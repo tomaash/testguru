@@ -1,4 +1,6 @@
 require 'csv'
+require 'zip/zip'
+
 DEFAULT_POINTS = 3
 
 class ImportController < ApplicationController
@@ -9,14 +11,18 @@ class ImportController < ApplicationController
   end
 
   def result
-    begin
-      error = false
-      data = parse_data
-      setup_course_and_topic
-      validate_data(data.dup)
-      load_data(data)
-    rescue
-      error = $!.to_s
+    @imported_questions=[]
+    @replaced_questions=[]
+    file = params[:import][:uploaded_data]
+    error = false
+    parse_data(file) do |data|
+      begin
+        setup_course_and_topic
+        validate_data(data.dup)
+        load_data(data)
+      rescue
+        error = $!.to_s
+      end
     end
     if error
       flash[:notice] = error
@@ -26,20 +32,44 @@ class ImportController < ApplicationController
 
   private
 
-  def parse_data
-    file = params[:import][:uploaded_data]
+  def parse_data(file)
     if file
       @filename, @extension = file.original_filename.split('.')
     else
       raise "No file uploaded"
     end
     #loads data in yaml format, if csv is provided, changes it to yaml
-    data = case @extension.downcase
+    case @extension.downcase
     when 'yaml' then
-      YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
-    when 'csv' then csv2yaml(file)
+      yield YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
+    when 'csv' then yield csv2yaml(file)
+    when 'zip' then unpack_zip(file) do |i|
+        parse_data(i) {|x| yield x}
+      end
     end
-    return data
+  end
+
+  def unpack_zip(file)
+    #function parse_data expects rails "magicked" tempfile (includes method
+    #original_filename)
+    #open zip file
+    Zip::ZipInputStream::open(file.path) do |io|
+      #iterate over contents of zip file
+      while (entry = io.get_next_entry)
+        filename = entry.name
+        #pack every content into a tempfile
+        temp = Tempfile.new(entry.name)
+        a = File.open(temp.path, 'w')
+        a.write(io.read)
+        a.close
+        #and add original_filename method to it
+        temp.instance_variable_set(:@original_filename, entry.name)
+        def temp.original_filename
+          return @original_filename
+        end
+        yield temp
+      end
+    end
   end
 
   # def setup_course_and_topic
@@ -116,8 +146,6 @@ class ImportController < ApplicationController
   end
 
   def load_data(data)
-    @imported_questions=[]
-    @replaced_questions=[]
     while true
       question_data = data.shift.to_s
       answers = data.shift
