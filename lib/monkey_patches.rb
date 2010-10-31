@@ -28,4 +28,13 @@ class String
   def html_newlines
     self.gsub("\n","<br/>")
   end
+  def hard_indent
+    new_string = ""
+    self.each_line do |line|
+      stripped = line.gsub(/^\ +/,"")
+      space_count = line.length - stripped.length
+      new_string << "&nbsp;"*space_count + stripped
+    end
+    return new_string
+  end
 end

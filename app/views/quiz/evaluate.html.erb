@@ -13,7 +13,7 @@
 <% cnt = i+1 %>
 <table width="100%"><tr>
   <td valign="top">
-    <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> </span> 
+    <span class="question">  <%= cnt %>. <%= (h question.value).hard_indent.html_newlines %> </span> 
   </td>
   <td valign="top" align="right" width="80px">
     <i>(<span class="red"><%=@corrections[cnt.to_s]["total"]%>b</span>, max <%= question.points%>b)</i>
@@ -29,7 +29,7 @@
   <%= radio_button_tag "answers[#{cnt}]",answer.choice, reaction, :disabled => true %>
   <% end %>
   <span class="<%= answer.correct ? 'green' : 'none' %>">
-    <%= h answer.value %><br/>
+    <%= (h answer.value).hard_indent.html_newlines %><br/>
   </span>
   <% end %>
 </td></tr></table>

@@ -9,7 +9,7 @@ Maximální počet bodů: <b><%= @max_points %></b>
 <% cnt = i+1 %>
 <table width="100%"><tr>
   <td valign="top">
-    <span class="question">  <%= cnt %>. <%= (h question.value).html_newlines %> </span> 
+    <span class="question">  <%= cnt %>. <%= (h question.value).hard_indent.html_newlines %> </span> 
   </td>
   <td valign="top" align="right" width="30px">
     <i>(<%= question.points%>b)</i>
@@ -22,7 +22,7 @@ Maximální počet bodů: <b><%= @max_points %></b>
 <% else %>
 <%= radio_button_tag "answers[#{cnt}]",answer.choice %>
 <% end %>
-<label for="answers_<%=cnt%>_<%=answer.choice%>"><%= h answer.value %></label><br/>
+<label for="answers_<%=cnt%>_<%=answer.choice%>"><%= (h answer.value).hard_indent.html_newlines %></label><br/>
 <% end %>
 <br/>
 </td></tr></table>
