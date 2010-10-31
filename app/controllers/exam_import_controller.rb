@@ -22,10 +22,10 @@ class ExamImportController < ApplicationController
       end
       #loads data in yaml format, if csv is provided, changes it to yaml
       data = case @extension
-             when 'yaml' then
-               YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
-             when 'csv' then load_csv(file)
-             end
+      when 'yaml' then
+        YAML.load(file) #YAML.load(File.new('import.yaml','r').read)
+      when 'csv' then load_csv(file)
+      end
 
       #data = YAML.load(params[:import][:uploaded_data])
       # p Dir.getwd
@@ -33,8 +33,8 @@ class ExamImportController < ApplicationController
       error = false
       validate_data(data.dup)
       load_data(data)
-      # rescue
-      #   error = $!.to_s
+    rescue
+      error = $!.to_s
     end
     if error
       flash[:notice] = error
@@ -44,13 +44,30 @@ class ExamImportController < ApplicationController
 
   private
 
+  def create_question_code(course, topic, question)
+    if course
+      question_code = "#{course}-#{topic}-#{question}"
+    elsif topic
+      question_code = "#{topic}-#{question}"
+    else
+      question_code = question
+    end
+    return question_code
+  end
+
   def validate_data(data)
     data.each_with_index do |exam,i|
       questions = exam['questions'].split(" ")
+      course = exam['course']
+      topic = exam['topic']
+      if topic and not course
+        raise "If you specify topic, you must also specify course"
+      end
       raise "Exam no. #{i} is empty" if questions.empty?
       questions.each_with_index do |question,j|
-        existing_question = Question.find_by_code(question)
-        raise "Exam no. #{i}, question no. #{j} does not exist" if not existing_question
+        question_code = create_question_code(course, topic, question)
+        existing_question = Question.find_by_code(question_code)
+        raise "Exam no. #{i}, question no. #{j} (#{question_code}) does not exist" if not existing_question
       end
     end
   end
@@ -64,6 +81,8 @@ class ExamImportController < ApplicationController
       signature = exam['signature']
       description = exam['description']
       questions = exam['questions'].split(" ")
+      course = exam['course']
+      topic = exam['topic']
       existing = Exam.find_by_name(name)
       if existing
         e = existing
@@ -72,7 +91,8 @@ class ExamImportController < ApplicationController
         e = Exam.new
       end
       questions.each do |question|
-        existing_question = Question.find_by_code(question)
+        question_code = create_question_code(course, topic, question)
+        existing_question = Question.find_by_code(question_code)
         e.questions << existing_question
       end
       e.name = name
@@ -106,7 +126,7 @@ class ExamImportController < ApplicationController
           end
         end
         first_line = false
-      #and loads data from the remaining lines
+        #and loads data from the remaining lines
       else
         exam = {}
         exam['name'] = row[columns['name']]
