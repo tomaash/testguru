@@ -28,6 +28,12 @@ class ExamsController < ApplicationController
 
   def export
     @exam = Exam.find(params[:id])
+    redirect_to :action => :nice_export, :id => @exam.name 
+  end
+  
+  def nice_export
+    @exam = Exam.find_by_name(params[:id])
+    render :action => :export
   end
 
   def solution
