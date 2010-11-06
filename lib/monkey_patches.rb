@@ -37,4 +37,15 @@ class String
     end
     return new_string
   end
+  
+  def pdf_hard_indent
+    nbsp = 0xC2.chr+ 0xA0.chr
+    new_string = ""
+    self.each_line do |line|
+      stripped = line.gsub(/^\ +/,"")
+      space_count = line.length - stripped.length
+      new_string << nbsp*space_count*2 + stripped
+    end
+    return new_string    
+  end
 end

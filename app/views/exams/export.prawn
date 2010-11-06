@@ -25,12 +25,14 @@ amount = 13
   question_lines = question.value.split("\n")
   question_header = question_lines[0].strip
   question_body = question_lines[1..1000].join("\n")
+  p question_body
   pdf.font "./lib/fonts/Verdana Bold.ttf"
   pdf.text "#{i+1}."
   pdf.move_up(pdf.font_size+0.7)
   amount += 7 if i > 8
+  # nbsp = 0xC2.chr+ 0xA0.chr
   pdf.span(pdf.bounds.width-amount, :position => amount) do
-    pdf.text "#{question_header} (#{question.points}b)\n#{question_body}"
+    pdf.text "#{question_header} (#{question.points}b)\n#{question_body.pdf_hard_indent}"
   end
   pdf.font "./lib/fonts/Verdana.ttf"
   pdf.pad(8) do
