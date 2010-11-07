@@ -17,7 +17,8 @@ pdf.text " "
 sorting = case @exam.sorting
 when "reverse" : proc{-1}
 when "random" : proc{rand(1000)}
-else proc{1}
+when "id" : proc{1}
+else proc{0}
 end
 amount = 13
 @exam.questions.sort_by{|q| q.id*sorting.call}.each_with_index do |question,i|
@@ -25,7 +26,6 @@ amount = 13
   question_lines = question.value.split("\n")
   question_header = question_lines[0].strip
   question_body = question_lines[1..1000].join("\n")
-  p question_body
   pdf.font "./lib/fonts/Verdana Bold.ttf"
   pdf.text "#{i+1}."
   pdf.move_up(pdf.font_size+0.7)
@@ -55,7 +55,7 @@ amount = 13
           amount = 15
           pdf.span(pdf.bounds.width-amount, :position => amount) do
             pdf.move_up(pdf.font_size)
-            pdf.text "#{answer.value}"
+            pdf.text "#{answer.value.pdf_hard_indent}"
           end
         end
       end
