@@ -22,7 +22,7 @@ else proc{0}
 end
 amount = 13
 @exam.questions.sort_by{|q| q.id*sorting.call}.each_with_index do |question,i|
-  pdf.start_new_page if pdf.cursor < 100
+  pdf.start_new_page if pdf.cursor < 150
   question_lines = question.value.split("\n")
   question_header = question_lines[0].strip
   question_body = question_lines[1..1000].join("\n")
