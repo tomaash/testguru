@@ -3,7 +3,7 @@ class ExamsController < ApplicationController
   DEFAULT_HEADING = "Písemný test"
   DEFAULT_VERSION = "Skupina A"
   DEFAULT_SIGNATURE = "Jméno (číslo skupiny):"
-  DEFAULT_DESCRIPTION = ""
+  DEFAULT_DESCRIPTION = " "
   
   before_filter :require_user
   prawnto :prawn => { :page_size => 'A4' }
