@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ExamsController < ApplicationController
   
   DEFAULT_HEADING = "Písemný test"

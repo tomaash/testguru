@@ -1,5 +1,5 @@
 require 'csv'
-require 'zip/zip'
+require 'zipruby'
 
 DEFAULT_POINTS = 3
 
@@ -39,7 +39,6 @@ class ImportController < ApplicationController
       raise "No file uploaded"
     end
     #loads data in yaml format, if csv is provided, changes it to yaml
-    p file.original_filename
     if not @extension
       flash[:notice] = "ZIP file must not contain directories"
     else
@@ -58,24 +57,60 @@ def unpack_zip(file)
   #function parse_data expects rails "magicked" tempfile (includes method
   #original_filename)
   #open zip file
-  Zip::ZipInputStream::open(file.path) do |io|
+  Zip::Archive.open(file.path) do |io|
     #iterate over contents of zip file
-    while (entry = io.get_next_entry)
-      filename = entry.name
+    n = io.num_files 
+    n.times do |i|
+      filename = io.get_name(i)
+      io.fopen(filename) do |f|
       #pack every content into a tempfile
-      temp = Tempfile.new(entry.name)
+      temp = Tempfile.new(filename)
       a = File.open(temp.path, 'w')
-      a.write(io.read)
+      a.write(f.read)
       a.close
       #and add original_filename method to it
-      temp.instance_variable_set(:@original_filename, entry.name)
+      temp.instance_variable_set(:@original_filename, filename)
       def temp.original_filename
         return @original_filename
       end
       yield temp
+      end
     end
   end
 end
+
+#  def unpack_zip(file)
+#    #function parse_data expects rails "magicked" tempfile (includes method
+#    #original_filename)
+#    #open zip file
+#    Zip::ZipInputStream::open(file.path) do |io|
+#      #iterate over contents of zip file
+#      while (entry = io.get_next_entry)
+#        filename = entry.name
+#        #pack every content into a tempfile
+#        temp = Tempfile.new(entry.name)
+#        a = File.open(temp.path, 'w')
+#        a.write(io.read)
+#        a.close
+#        #and add original_filename method to it
+#        temp.instance_variable_set(:@original_filename, entry.name)
+#        def temp.original_filename
+#          return @original_filename
+#        end
+#        yield temp
+#      end
+#    end
+#  end
+
+
+
+
+
+
+
+
+
+
 
 # def setup_course_and_topic
 #     if not params[:import][:course].blank?
@@ -200,7 +235,8 @@ end
 def csv2yaml(file)
   output = []
   answers = []
-  CSV::Reader.parse(file, ',') do |row|
+  CSV::Reader.parse(file,',') do |row|
+  #CSV.foreach(file) do |row|
     if (row[0])
       output << answers unless answers.empty?
       points = row[2].to_i

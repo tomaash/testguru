@@ -1,3 +1,5 @@
+.idea
+.idea/**/*
 log/*.log
 tmp/**/*
 doc/api
