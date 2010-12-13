@@ -1,7 +1,7 @@
 require 'prawn/layout'
 pdf.font "./lib/fonts/Verdana Bold.ttf"
 pdf.text @exam.heading_text||"", :align => :center, :size => 15
-pdf.font "./lib/fonts/Verdana.ttf", :size => 9
+pdf.font "./lib/fonts/Verdana.ttf", :size => (@size.to_i || 9)
 pdf.text " "
 pdf.text "Verze testu: #{@exam.version_text}", :align => :center
 pdf.text " "
@@ -22,7 +22,7 @@ else proc{0}
 end
 amount = 13
 @exam.questions.sort_by{|q| q.id*sorting.call}.each_with_index do |question,i|
-  pdf.start_new_page if pdf.cursor < 150
+  pdf.start_new_page if pdf.cursor < (@offset.to_i || 150)
   question_lines = question.value.split("\n")
   question_header = question_lines[0].strip
   question_body = question_lines[1..1000].join("\n")
