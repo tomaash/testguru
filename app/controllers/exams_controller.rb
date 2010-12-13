@@ -29,7 +29,7 @@ class ExamsController < ApplicationController
 
   def export
     @exam = Exam.find(params[:id])
-    redirect_to :action => :nice_export, :id => @exam.name, :format => 'pdf'
+#    redirect_to :action => :nice_export, :id => @exam.name, :format => 'pdf'
   end
   
   def nice_export
