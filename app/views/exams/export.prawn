@@ -1,17 +1,17 @@
 require 'prawn/layout'
 pdf.font "./lib/fonts/Verdana Bold.ttf"
-pdf.text @exam.heading_text, :align => :center, :size => 15
+pdf.text @exam.heading_text||"", :align => :center, :size => 15
 pdf.font "./lib/fonts/Verdana.ttf", :size => 9
 pdf.text " "
 pdf.text "Verze testu: #{@exam.version_text}", :align => :center
 pdf.text " "
 pdf.font "./lib/fonts/Verdana Bold.ttf"
-pdf.text @exam.signature_text
+pdf.text @exam.signature_text||""
 # pdf.text " "
 # pdf.text "Datum: __________________"
 pdf.text " "
 pdf.font "./lib/fonts/Verdana.ttf"
-pdf.text @exam.description_text
+pdf.text @exam.description_text||""
 # pdf.text "Test obsahuje 10 otázek po 4b a 15 otázek po 2b. Maximální počet bodů z testu je 70b. Otázky za 2b mají právě 1 správnou odpověď. Otázky za 4b mají 1 nebo více správných odpovědí a za každou chybu se strhávají 2b (ale ne do mínusu). Správné odpovědi označte kolečkem. Pokud opravujete, přeškrtněte kolečko křížkem. V případě dalších oprav proškrtněte všechna písmena svislou čarou a vypište vedle písmena správných odpovědí (např. a, b, e). Na vypracování testu máte 45 minut, přeji hodně zdaru."
 pdf.text " "
 sorting = case @exam.sorting
