@@ -1,3 +1,4 @@
-== TestGuru
+TestGuru
+========
 
 Testguru is an application for automated generation of randomized question sets for student exams. These sets can be output as PDF files, or as public URLs, where students can fill their tests online. 
